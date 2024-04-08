@@ -32,7 +32,7 @@ if ($conn->connect_error) {
 }
 
 // Consulta SQL para obtener todos los usuarios
-$sql = "SELECT * FROM clientes";
+$sql = "SELECT * FROM categorias";
 $result = $conn->query($sql);
 ?>
 
@@ -44,18 +44,12 @@ $result = $conn->query($sql);
 </head>
 <body>
 
-<h2>Usuarios en la base de datos</h2>
 
 <table>
     <tr>
-        <th>DNI</th>
-        <th>Pass</th>
-        <th>Correo</th>
+        <th>id_categoria</th>
         <th>Nombre</th>
-        <th>Apellido1</th>
-        <th>Apellido2</th>
-        <th>Teléfono</th>
-        <th>Rol</th>
+        <th>Descripcion</th>
         <th></th>
         <th></th>
         <!-- Agrega más columnas si es necesario -->
@@ -65,31 +59,22 @@ $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
             echo "<tr>";
-            echo "<td>" . $row["dni"] . "</td>";
-            echo "<td>" . $row["pass"] . "</td>";
-            echo "<td>" . $row["correo"] . "</td>";
+            echo "<td>" . $row["id_categoria"] . "</td>";
             echo "<td>" . $row["nombre"] . "</td>";
-            echo "<td>" . $row["apellido1"] . "</td>";
-            echo "<td>" . $row["apellido2"] . "</td>";
-            echo "<td>" . $row["telefono"] . "</td>";
-            echo "<td>" . $row["rol"] . "</td>";
+            echo "<td>" . $row["descripcion"] . "</td>";
     ?>
     <!--BOTONES ELIMINAR Y MODIFICAR -->
             <td>
-              <form method="get" action="modifica_usuario.php">
-                <input type='hidden' name='dni' value='<?php echo $row["dni"]?>'>
-                <input type='hidden' name='pass' value='<?php echo $row["pass"]?>'>
-                <input type='hidden' name='correo' value='<?php echo $row["correo"]?>'>
+              <form method="get" action="modifica_categoria.php">
+                <input type='hidden' name='id_categoria' value='<?php echo $row["id_categoria"]?>'>
                 <input type='hidden' name='nombre' value='<?php echo $row["nombre"]?>'>
-                <input type='hidden' name='apellido1' value='<?php echo $row["apellido1"]?>'>
-                <input type='hidden' name='apellido2' value='<?php echo $row["apellido2"]?>'>
-                <input type='hidden' name='telefono' value='<?php echo $row["telefono"]?>'>
+                <input type='hidden' name='descripcion' value='<?php echo $row["descripcion"]?>'>
                 <button type="submit" class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span> Modificar</button>
               </form>
               </td>
               <td>
-              <form method="post" action="eliminarUsuarios_admin.php">
-                <input type='hidden' name='dni' value='<?php echo $row["dni"]?>'>
+              <form method="post" action="eliminar_categoria.php">
+                <input type='hidden' name='id_categoria' value='<?php echo $row["id_categoria"]?>'>
                 <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Eliminar</button>
               </form>
               
@@ -110,5 +95,6 @@ $result = $conn->query($sql);
 // Cerrar conexión
 $conn->close();
 ?>
+<a href="agregar_categoria.php">Añadir nueva categoria</a>
 </body>
 </html>

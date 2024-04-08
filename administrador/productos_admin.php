@@ -31,65 +31,61 @@ if ($conn->connect_error) {
     die("Error de conexión: " . $conn->connect_error);
 }
 
-// Consulta SQL para obtener todos los usuarios
-$sql = "SELECT * FROM clientes";
-$result = $conn->query($sql);
+// Consulta SQL para obtener los datos de los productos con la información de categorías
+$consulta = "SELECT p.id_producto, p.nombre AS nombre_producto, p.descripcion, p.precio, c.id_categoria, c.nombre AS nombre_categoria
+             FROM productos p
+             INNER JOIN categorias c ON p.id_categoria = c.id_categoria";
+
+// Ejecutar la consulta
+$resultado = $conn->query($consulta);
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Usuarios</title>
+    <title>Productos</title>
 </head>
 <body>
 
-<h2>Usuarios en la base de datos</h2>
 
 <table>
     <tr>
-        <th>DNI</th>
-        <th>Pass</th>
-        <th>Correo</th>
-        <th>Nombre</th>
-        <th>Apellido1</th>
-        <th>Apellido2</th>
-        <th>Teléfono</th>
-        <th>Rol</th>
+        <th>id_producto</th>
+        <th>Nombre producto</th>
+        <th>Descripcion</th>
+        <th>Precio</th>
+        <th>id_categoria</th>
+        <th>nombre categoria</th>
         <th></th>
         <th></th>
         <!-- Agrega más columnas si es necesario -->
     </tr>
     <?php
     // Iterar sobre los resultados y mostrar cada usuario en una fila de la tabla
-    if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
+    if ($resultado->num_rows > 0) {
+        while($row = $resultado->fetch_assoc()) {
             echo "<tr>";
-            echo "<td>" . $row["dni"] . "</td>";
-            echo "<td>" . $row["pass"] . "</td>";
-            echo "<td>" . $row["correo"] . "</td>";
-            echo "<td>" . $row["nombre"] . "</td>";
-            echo "<td>" . $row["apellido1"] . "</td>";
-            echo "<td>" . $row["apellido2"] . "</td>";
-            echo "<td>" . $row["telefono"] . "</td>";
-            echo "<td>" . $row["rol"] . "</td>";
+            echo "<td>" . $row["id_producto"] . "</td>";
+            echo "<td>" . $row["nombre_producto"] . "</td>";
+            echo "<td>" . $row["descripcion"] . "</td>";
+            echo "<td>" . $row["precio"] . "</td>";
+            echo "<td>" . $row["id_categoria"] . "</td>";
+            echo "<td>" . $row["nombre_categoria"] . "</td>";
     ?>
     <!--BOTONES ELIMINAR Y MODIFICAR -->
             <td>
-              <form method="get" action="modifica_usuario.php">
-                <input type='hidden' name='dni' value='<?php echo $row["dni"]?>'>
-                <input type='hidden' name='pass' value='<?php echo $row["pass"]?>'>
-                <input type='hidden' name='correo' value='<?php echo $row["correo"]?>'>
+              <form method="get" action="modifica_producto.php">
+                <input type='hidden' name='id_producto' value='<?php echo $row["id_producto"]?>'>
                 <input type='hidden' name='nombre' value='<?php echo $row["nombre"]?>'>
-                <input type='hidden' name='apellido1' value='<?php echo $row["apellido1"]?>'>
-                <input type='hidden' name='apellido2' value='<?php echo $row["apellido2"]?>'>
-                <input type='hidden' name='telefono' value='<?php echo $row["telefono"]?>'>
+                <input type='hidden' name='descripcion' value='<?php echo $row["descripcion"]?>'>
+                <input type='hidden' name='id_categoria' value='<?php echo $row["id_categoria"]?>'>
                 <button type="submit" class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span> Modificar</button>
               </form>
               </td>
               <td>
-              <form method="post" action="eliminarUsuarios_admin.php">
-                <input type='hidden' name='dni' value='<?php echo $row["dni"]?>'>
+              <form method="post" action="eliminar_producto.php">
+                <input type='hidden' name='id_producto' value='<?php echo $row["id_producto"]?>'>
                 <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Eliminar</button>
               </form>
               
@@ -98,7 +94,7 @@ $result = $conn->query($sql);
             echo "</tr>";
         }
     } else {
-        echo "<tr><td colspan='5'>No hay usuarios</td></tr>";
+        echo "<tr><td colspan='5'>No hay productos</td></tr>";
     }
     ?>
 </table>
@@ -110,5 +106,6 @@ $result = $conn->query($sql);
 // Cerrar conexión
 $conn->close();
 ?>
+<a href="agregar_producto.php">Añadir nuevo producto</a>
 </body>
 </html>
