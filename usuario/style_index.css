@@ -1,0 +1,187 @@
+body{
+    font-family: 'roboto',sans-serif;
+    margin: 0;
+}
+h1{
+    font-size: 4em;
+    color: rgb(255, 255, 0);
+}
+h2{
+    font-size: 2.3em;
+}
+h3{
+    font-size:1.7em;
+} 
+p{
+    font-size: 1.3em;
+}
+ul{
+    list-style: none;
+}
+    header{
+        background-color: rgb(225,225,225);
+        width: 100%;
+        position: sticky;
+        position: -webkit-sticky;
+        top: 0%;
+        z-index: 2;
+   }
+   header .logo{
+        margin: 0;
+        padding: 25px 30px;
+        font-weight: bold;
+        color: #edb45e;
+        font-size: 5em;
+    }
+    .container{
+        max-width: 1400px;
+        margin: auto;
+    }
+    header .container{
+        display:flex;
+        flex-direction:column;
+        align-items: center;        
+    }
+    header a{
+        text-decoration: none;
+        padding: 5px 12px;
+        font-weight: bold;
+        color: black;
+    }
+    header a:hover{
+        background-color: black;
+        color: white;
+        text-transform: uppercase;
+    }
+
+
+nav li{
+    display: inline-flex;
+    margin-bottom: 10px;
+    }
+
+
+
+    
+    #hero{
+display: flex;
+align-items: center;
+justify-content: center;
+text-align: center;
+flex-direction: column;
+height: 90vh;
+color: white;
+background-image: linear-gradient(
+    0deg,
+    rgba(0,0,0,0.7),
+    rgba(0,0,0,0.7)
+)
+,url("IMÁGENES/panaderia\ tina.jpg");
+background-position: center center;
+}
+
+
+button{
+    font-size: 1.5em;
+    font-weight: bold;
+    padding: 5px 15px;
+    border-radius: 30px;
+    border: 3px solid;
+    color:white ;
+    background-color: #a07e5c;
+}
+
+button:hover{
+    background-color: #c27427;
+}
+
+#nuestros-productos{
+background-color: #d49537;
+text-align: center;
+}
+#nuestros-productos .container{
+padding: 50px 0px;
+}
+#nuestros-productos h2{
+margin-top: 0;
+font-size: 3em;
+}
+
+#nuestros-productos p{
+display: none;
+}
+.carta:first-child{
+background-image: linear-gradient(
+    0deg,
+    rgba(0,0,0,0.6),
+    rgba(0,0,0,0.6)
+)
+,url("IMÁGENES/panes.jpg");
+padding: 15px;
+margin: 15px;
+color: white;
+border-radius: 30px;
+}
+.carta:nth-child(2){
+background-image: linear-gradient(
+    0deg,
+    rgba(0,0,0,0.6),
+    rgba(0,0,0,0.6)
+)
+,url("IMÁGENES/frutas\ y\ verduras.jpg");
+padding: 15px;
+margin: 15px;
+color: white;
+border-radius: 30px;
+}
+.carta:nth-child(3){
+background-image: linear-gradient(
+    0deg,
+    rgba(0,0,0,0.6),
+    rgba(0,0,0,0.6)
+)
+,url("IMÁGENES/pasteles.jpg");
+padding: 15px;
+margin: 15px;
+color: white;
+border-radius: 30px;
+}   
+
+.mapa {
+    width: 80%;
+    margin: 0 auto;
+    padding-bottom: 56.25%;
+    position: relative;
+    overflow: hidden;
+    max-width: 100%;
+    z-index: 1;
+}
+/* Estilo para el iframe del mapa */
+.mapa iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#pedido{
+background-color: black;
+color: white;
+display: flex;
+align-items: center;
+justify-content: center;
+text-align: center;
+flex-direction: column;
+height: 30vh;
+}
+footer{
+text-align: center;
+font-size: 2em;
+}
+a{
+color:white
+}
+a:hover{
+color: red;
+}

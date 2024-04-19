@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -18,6 +19,14 @@
     </div>
 
     <?php
+    session_start();
+    if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+        header("location: ../index.php");
+        exit;
+        //AÑADIR TIEMPO DE SESION PARA INICIAR Y ACABAR LA SESION
+    }
+    
+
 // Conexión a la base de datos
 $servername = "localhost";
 $username = "root";

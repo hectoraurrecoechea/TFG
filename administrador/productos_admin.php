@@ -18,6 +18,12 @@
     </div>
 
     <?php
+    session_start();
+    if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+        header("location: ../index.php");
+        exit;
+        //AÑADIR TIEMPO DE SESION PARA INICIAR Y ACABAR LA SESION
+    }
 // Conexión a la base de datos
 $servername = "localhost";
 $username = "root";
@@ -77,8 +83,9 @@ $resultado = $conn->query($consulta);
             <td>
               <form method="get" action="modifica_producto.php">
                 <input type='hidden' name='id_producto' value='<?php echo $row["id_producto"]?>'>
-                <input type='hidden' name='nombre' value='<?php echo $row["nombre"]?>'>
+                <input type='hidden' name='nombre_producto' value='<?php echo $row["nombre_producto"]?>'>
                 <input type='hidden' name='descripcion' value='<?php echo $row["descripcion"]?>'>
+                <input type='hidden' name='precio' value='<?php echo $row["precio"]?>'>
                 <input type='hidden' name='id_categoria' value='<?php echo $row["id_categoria"]?>'>
                 <button type="submit" class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span> Modificar</button>
               </form>

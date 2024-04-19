@@ -4,14 +4,14 @@
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
       <!-- Bootstrap -->
       <link href="css/bootstrap.min.css" rel="stylesheet">
-      <title>Modifica categoria</title>
+      <title>Modifica producto</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <title>Modifica categoria</title>
+    <title>Modifica prodcuto</title>
   </head>
   <body>
   <?php 
@@ -20,8 +20,9 @@
      session_start();
    }
    $row["id_producto"]=$_GET["id_producto"];
-   $row["nombre"]=$_GET["nombre"];
+   $row["nombre_producto"]=$_GET["nombre_producto"];
    $row["descripcion"]=$_GET["descripcion"];
+   $row["precio"]=$_GET["precio"];
    $row["id_categoria"]=$_GET["id_categoria"];
   ?>
     <div class="container">
@@ -33,10 +34,13 @@
               <label>&nbsp;&nbsp;id_producto:&nbsp;</label><input type="text" size="7" name="id_producto" value="<?php echo $row["id_producto"] ?>" readonly>
             </div>
             <div class="form-group">
-            <label>&nbsp;&nbsp;Nombre&nbsp;</label><input type="text" size="35" name="nombre" value="<?php echo $row["nombre"]; ?>">
+            <label>&nbsp;&nbsp;Nombre&nbsp;</label><input type="text" size="35" name="nombre_producto" value="<?php echo $row["nombre_producto"]; ?>">
             </div>
             <div class="form-group">
              <label>&nbsp;&nbsp;Descripcion&nbsp;</label><input type="text" name="descripcion" size="150" value="<?php echo $row["descripcion"]; ?>">
+            </div>
+            <div class="form-group">
+             <label>&nbsp;&nbsp;Precio&nbsp;</label><input type="text" name="precio" size="15" value="<?php echo $row["precio"]; ?>">
             </div>
             <div class="form-group"> 
               <label>&nbsp;&nbsp;id_categoria:&nbsp;</label><input type="text" size="7" name="id_categoria" value="<?php echo $row["id_categoria"] ?>">

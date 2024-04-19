@@ -14,8 +14,9 @@
 
   <?php
 $row["id_producto"]=$_GET["id_producto"];
-$row["nombre"]=$_GET["nombre"];
+$row["nombre_producto"]=$_GET["nombre_producto"];
 $row["descripcion"]=$_GET["descripcion"];
+$row["precio"]=$_GET["precio"];
 $row["id_categoria"]=$_GET["id_categoria"];
 
 $servername = "localhost";
@@ -34,8 +35,9 @@ $dbname = "panaderia";
 
           $var_consulta=   "UPDATE productos SET "
                            . "id_producto='" . $row["id_producto"]
-                           . "', nombre='" . $row["nombre"]
+                           . "', nombre='" . $row["nombre_producto"]
                            . "', descripcion='" . $row["descripcion"]
+                           . "', precio='" . $row["precio"]
                            . "', id_categoria='" . $row["id_categoria"]
                            . "' WHERE id_producto='" . $row["id_producto"]
                            . "'";

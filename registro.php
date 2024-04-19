@@ -29,6 +29,7 @@
         <input type="text" name="telefono" required><br>
 
         <input type="submit" value="Registrar">
-    </form>
+    </form><br>
+    <a href="index.php">Volver a inicio</a>
 </body>
 </html>
