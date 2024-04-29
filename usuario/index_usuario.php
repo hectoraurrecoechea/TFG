@@ -9,7 +9,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 if ($_SESSION['rol'] == 'administrador') {
      echo "Bienvenido, Administrador!";
 } else {
-    echo "Bienvenido, Usuario!";
+    //echo "Bienvenido, Usuario!";
 }
 ?>
 
@@ -27,8 +27,8 @@ if ($_SESSION['rol'] == 'administrador') {
     </style>
 </head>
 <body>
-<h1>Bienvenido, <?php echo $_SESSION['dni']; ?></h1>
- <header>
+<!--<h1>Bienvenido, <?php echo $_SESSION['dni']; ?></h1>-->
+<header>
      <div class="container">
          <p class="logo">Panaderia Tina</p>
          <nav>
@@ -39,6 +39,7 @@ if ($_SESSION['rol'] == 'administrador') {
             <li><a href="configuracion.php">CONFIGURACION</a></li>
             <li><a href="contacto.php">CONTACTO</a></li>
             <li><a href="buscar.php">BUSCAR PRODUCTO</a></li>
+            <li><a href="carrito.php">CARRITO</a></li>
             <li><a href="cerrarSesion_usuario.php">Cerrar sesion</a></li>
          </nav>
      </div>

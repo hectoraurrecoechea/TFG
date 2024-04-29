@@ -1,3 +1,17 @@
+<?php
+session_start();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("location: ../index.php");
+    exit;
+}
+
+
+if ($_SESSION['rol'] == 'administrador') {
+     echo "Bienvenido, Administrador!";
+} else {
+    //echo "Bienvenido, Usuario!";
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +25,7 @@
     </style>
 </head>
 <body>
- <header>
+<header>
      <div class="container">
          <p class="logo">Panaderia Tina</p>
          <nav>
@@ -22,11 +36,13 @@
             <li><a href="configuracion.php">CONFIGURACION</a></li>
             <li><a href="contacto.php">CONTACTO</a></li>
             <li><a href="buscar.php">BUSCAR PRODUCTO</a></li>
+            <li><a href="carrito.php">CARRITO</a></li>
+            <li><a href="cerrarSesion_usuario.php">Cerrar sesion</a></li>
          </nav>
      </div>
  </header>
  <H1>NUESTRA HISTORIA</H1>
- <img src="https://scontent.fvll1-1.fna.fbcdn.net/v/t39.30808-6/299716935_525305212725457_6338718836353774532_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=5f2048&_nc_ohc=xtR5v7krjNwAb71Nxef&_nc_ht=scontent.fvll1-1.fna&oh=00_AfByFT0VcHQnEPNTKAOO8t8Fe9xMgBdsW_YZiW2JSYkwDQ&oe=661C4351" width="30%" height="30%">
+ <img src="https://scontent-mad2-1.xx.fbcdn.net/v/t39.30808-6/299716935_525305212725457_6338718836353774532_n.jpg?stp=dst-jpg_s960x960&_nc_cat=108&ccb=1-7&_nc_sid=5f2048&_nc_ohc=qOC8nUfLs68Ab5-HzFd&_nc_ht=scontent-mad2-1.xx&oh=00_AfDkI8xix4ekR-gv0ZYsaRvKPSWlUTudbsdlbWL-BCsUwA&oe=66354FD1" width="30%" height="30%">
  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sem dui, condimentum aliquam accumsan eget, interdum non urna. Nam at enim mauris. Nunc egestas felis et ipsum ultrices, ac iaculis odio consequat. Vivamus a metus lorem. Donec tincidunt, ipsum ut efficitur tristique, dolor ex tempus dui, pulvinar malesuada dui dui vitae libero. Duis in mattis diam, ac tincidunt tellus. In hac habitasse platea dictumst. Sed libero orci, rutrum eget lacinia eget, commodo quis risus. Mauris vitae sapien aliquam, laoreet sapien ut, dignissim dolor. Vestibulum condimentum, augue id venenatis imperdiet, tellus quam cursus lorem, suscipit rhoncus diam purus quis ex. Fusce viverra, felis ac consectetur ultricies, sem libero tincidunt felis, eget efficitur diam leo at sapien. Fusce eu efficitur enim. Duis posuere mi sed suscipit cursus. Maecenas semper, ligula vel fringilla hendrerit, tortor mi sollicitudin eros, sed elementum dolor nulla at metus. Integer tincidunt dignissim diam, sed sodales mauris fringilla feugiat. <br> <br><br>
 
     Etiam nibh augue, sollicitudin dignissim posuere et, porttitor in tellus. Proin dapibus odio nec eleifend posuere. Suspendisse id erat venenatis, consequat purus quis, cursus massa. Cras consectetur nisi non massa congue mollis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam lorem enim, consectetur eget odio eget, facilisis facilisis purus. Maecenas sit amet ultricies lectus, nec facilisis magna. Integer aliquet rutrum risus, quis pretium eros gravida non. <br><br><br>

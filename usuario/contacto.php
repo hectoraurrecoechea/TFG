@@ -1,3 +1,17 @@
+<?php
+session_start();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("location: ../index.php");
+    exit;
+}
+
+
+if ($_SESSION['rol'] == 'administrador') {
+     echo "Bienvenido, Administrador!";
+} else {
+    //echo "Bienvenido, Usuario!";
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,6 +33,8 @@
             <li><a href="configuracion.php">CONFIGURACION</a></li>
             <li><a href="contacto.php">CONTACTO</a></li>
             <li><a href="buscar.php">BUSCAR PRODUCTO</a></li>
+            <li><a href="carrito.php">CARRITO</a></li>
+            <li><a href="cerrarSesion_usuario.php">Cerrar sesion</a></li>
          </nav>
      </div>
  </header>
