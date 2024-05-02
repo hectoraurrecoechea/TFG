@@ -1,3 +1,4 @@
+
 body {
     font-family: 'roboto', sans-serif;
     margin: 0;
@@ -38,7 +39,7 @@ nav {
     flex-wrap: wrap;
     padding: 0;
     margin: 0;
-    background-color: rgb(225, 225, 225);
+   
     position: sticky;
     top: 0;
     z-index: 2;
@@ -72,6 +73,7 @@ nav a:hover {
 
 header {
     width: 100%;
+    background-color: rgb(225, 225, 225);
 }
 
 header .logo {
@@ -142,4 +144,3 @@ button {
     display: block;
     margin: 10px auto;
 }
-    

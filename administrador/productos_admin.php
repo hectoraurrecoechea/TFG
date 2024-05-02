@@ -40,7 +40,7 @@ if ($conn->connect_error) {
 // Consulta SQL para obtener los datos de los productos con la información de categorías
 $consulta = "SELECT p.id_producto, p.nombre AS nombre_producto, p.descripcion, p.precio, c.id_categoria, c.nombre AS nombre_categoria
              FROM productos p
-             INNER JOIN categorias c ON p.id_categoria = c.id_categoria";
+             INNER JOIN categorias c ON p.id_categoria = c.id_categoria ORDER BY id_categoria";
 
 // Ejecutar la consulta
 $resultado = $conn->query($consulta);
