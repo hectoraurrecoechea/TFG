@@ -7,9 +7,9 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
 // Verificar si el usuario ha iniciado sesión
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-    echo isset($_SESSION['carrito'])."esto es el carrito";
     // Verificar si ya hay productos en el carrito
-    if (!isset($_SESSION['carrito'])) {
+    //if (!isset($_SESSION['carrito'])) {
+        
         // Establecer la conexión a la base de datos (debes completar los datos de conexión)
         $conexion = new mysqli("localhost", "root", "12345", "panaderia");
         if ($conexion->connect_error) {
@@ -55,8 +55,10 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
 
         // Cerrar la conexión a la base de datos
         $conexion->close();
+    } else{
+        
     }
-}
+//}
 
 if ($_SESSION['rol'] == 'administrador') {
     echo "Bienvenido, Administrador!";
@@ -72,7 +74,7 @@ if ($_SESSION['rol'] == 'administrador') {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>¡Bienvenidos!</title>
-    <link rel="stylesheet" href="style_productos.css">
+    <link rel="stylesheet" href="style_historia.css">
     <style>
        table {
            width: 80%;
@@ -119,24 +121,31 @@ function actualizarCarrito($nuevas_cantidades) {
         $_SESSION['carrito'][$id_producto]['cantidad'] = $cantidad;
     }
     // Actualizar la base de datos
-    //actualizarBaseDeDatos();
+    actualizarBaseDeDatos();
     // Redireccionar a la página para reflejar los cambios
     header("Location: carrito.php");
     exit();
 }
 
 // Función para actualizar la base de datos con el contenido del carrito
-function actualizarBaseDeDatos() {
+function actualizarBaseDeDatos($borrarProducto = false, $id_producto = null) {
     $conexion = new mysqli("localhost", "root", "12345", "panaderia");
     if ($conexion->connect_error) {
         die("Error de conexión: " . $conexion->connect_error);
     }
     $dni_usuario = $_SESSION['dni'];
-    // Eliminar todos los productos del carrito del usuario
-    //$sql_eliminar = "DELETE FROM carrito WHERE dni = '$dni_usuario'";
-    //$conexion->query($sql_eliminar);
-    // Insertar los productos del carrito actualizado
-   
+    
+    // Si se va a borrar un producto específico
+    if ($borrarProducto && $id_producto !== null) {
+        // Eliminar el producto del carrito del usuario
+        $sql_eliminar = "DELETE FROM carrito WHERE dni = '$dni_usuario' AND id_producto = '$id_producto'";
+        $conexion->query($sql_eliminar);
+    } else {
+        // Si se va a vaciar todo el carrito del usuario
+        $sql_eliminar = "DELETE FROM carrito WHERE dni = '$dni_usuario'";
+        $conexion->query($sql_eliminar);
+    }
+    
     $conexion->close();
     header("Location: carrito.php");
     exit();
@@ -144,11 +153,12 @@ function actualizarBaseDeDatos() {
 
 // Función para eliminar un elemento del carrito
 function eliminarDelCarrito($id_producto) {
+    //tenemos que hacer un unset para eliminar el producto de la BD
     if (isset($_SESSION['carrito'][$id_producto])) {
-        echo "hola";
         unset($_SESSION['carrito'][$id_producto]);
         // Actualizar la base de datos
-        //actualizarBaseDeDatos();
+        $id_producto_a_eliminar = $id_producto; // Reemplaza 123 por el ID del producto que deseas eliminar
+        actualizarBaseDeDatos(true, $id_producto_a_eliminar);
         // Redireccionar a la página para reflejar los cambios
         header("Location: carrito.php");
         exit();
@@ -201,7 +211,7 @@ if (!empty($_SESSION['carrito'])) {
     echo "<h2>Carrito de Compras</h2>";
     echo "<form method='post'>";
     echo "<table>";
-    echo "<tr><th>Nombre</th><th>Descripción</th><th>Precio Unitario</th><th>Cantidad</th><th>Total</th><th>Acción</th></tr>";
+    echo "<tr><th>Nombre</th><th>Descripción</th><th>Precio Unitario</th><th>Cantidad</th><th>Modificar</th><th>Total</th><th>Acción</th></tr>";
 
     $total_suma = 0;
 
@@ -219,7 +229,12 @@ if (!empty($_SESSION['carrito'])) {
         echo "<td>" . $producto['nombre'] . "</td>";
         echo "<td>" . $producto['descripcion'] . "</td>";
         echo "<td>" . $producto['precio'] . " €</td>";
-        echo "<td><input type='number' name='cantidad[" . $id_producto . "]' min='1' max='10' value='1'></td>";
+        //echo "<td><input type='number' name='cantidad[$id_producto]' min='1' max='10' value='" . $producto['cantidad'] . "'></td>";
+        echo "<td><label>".$producto['cantidad']."</label></td>";
+        echo "<td>
+        <button>+</button>
+        <button>-</button>
+        </td>";
         echo "<td>$precio_total €</td>";
         echo "<td>
                 <form method='post'>

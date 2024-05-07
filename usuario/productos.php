@@ -18,154 +18,8 @@ if ($_SESSION['rol'] == 'administrador') {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>¡Bienvenidos!</title>
-    <link rel="stylesheet" href="style_productos.css">
-    <style>
-         body {
-    font-family: 'roboto', sans-serif;
-    margin: 0;
-    background-color: #edb45e;
-}
-
-h1 {
-    font-size: 2.7em;
-    text-align: center;
-    background-color: #c76017;
-}
-
-h2 {
-    font-size: 2em;
-    color: white;
-    background-color: #a07e5c;
-    text-align: center;
-}
-
-h3 {
-    font-size: 1.7em;
-}
-
-p {
-    font-size: 1.3em;
-}
-
-ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-nav {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    padding: 0;
-    margin: 0;
-    background-color: rgb(225, 225, 225);
-    position: sticky;
-    top: 0;
-    z-index: 2;
-    width: 100%; /* Añadido */
-}
-
-nav li {
-    margin: 0 10px;
-}
-
-nav a {
-    text-decoration: none;
-    padding: 5px 12px;
-    font-weight: bold;
-    color: black;
-    margin-bottom: 10px;
-}
-
-nav a:hover {
-    background-color: black;
-    color: white;
-    text-transform: uppercase;
-}
-
-.container {
-    max-width: 1400px;
-    margin: auto;
-    width: 100%; /* Añadido */
-    padding: 0 20px; /* Añadido */
-}
-
-header {
-    width: 100%;
-}
-
-header .logo {
-    margin: 0;
-    padding: 15px 0; /* Ajuste del padding */
-    font-weight: bold;
-    color: #edb45e;
-    font-size: 2.5em;
-    text-align: center; /* Añadido */
-    width: 100%; /* Añadido */
-}
-
-header .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* Media queries for responsiveness */
-
-@media screen and (max-width: 768px) {
-    nav {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    nav li {
-        margin: 10px 0;
-    }
-
-    header .logo {
-        font-size: 2em;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    header .logo {
-        font-size: 1.8em;
-    }
-}
-
-table {
-    width: 80%;
-    margin: 0 auto;
-    border-collapse: collapse;
-}
-
-th, td {
-    padding: 8px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background-color: #f2f2f2;
-}
-
-form {
-    text-align: center;
-}
-
-label, input {
-    display: block;
-    margin: 0 auto;
-}
-
-button {
-    display: block;
-    margin: 10px auto;
-}
-    
-    </style>
+    <link rel="stylesheet" href="style_historia.css">
+   
 </head>
 <body>
 <header>
@@ -344,24 +198,32 @@ if ($result_categorias->num_rows > 0) {
         // Verificar si se encontraron productos
         if ($result_productos->num_rows > 0) {
             // Mostrar los productos en una tabla
-            echo "<table>";
-            echo "<tr><th>Nombre</th><th>Descripción</th><th>Precio</th></tr>";
-            while ($row_producto = $result_productos->fetch_assoc()) {
-                echo "<tr>";
-                
-                echo "<td>" . $row_producto["nombre"] . "</td>";
-                echo "<td>" . $row_producto["descripcion"] . "</td>";
-                echo "<td>" . $row_producto["precio"] . "</td>";
-                echo "<td>";
-                echo '<form method="post">';
-                echo '<button type="submit" name="boton" value='.$row_producto['id_producto'].'>añadir carrito</button>';
-                echo '</form>';
-                echo "</td>";
+            echo '<div style="text-align: center;">'; // Contenedor para centrar la tabla
+            echo '<table style="border-collapse: collapse; margin: 0 auto;">'; // Estilos para centrar la tabla y colapsar los bordes
+            echo '<tr style="background-color: white; color: black;">'; // Fila para el encabezado
+            echo '<th style="width: 100px; border: 1px solid black;">Nombre</th>'; // Estilos para la columna Nombre
+            echo '<th style="width: 500px; border: 1px solid black;">Descripción</th>'; // Estilos para la columna Descripción
+            echo '<th style="width: 40px; border: 1px solid black;">Precio</th>'; // Estilos para la columna Precio
+            echo '<th style="border: 1px solid black;">&nbsp;</th>'; // Estilos para la columna "Añadir al carrito"
+            echo '</tr>'; // Cerrar fila de encabezado
 
-                    
-                echo "</tr>";
+            while ($row_producto = $result_productos->fetch_assoc()) {
+            echo '<tr>';
+                echo '<td style="border: 1px solid black; width: 200px;">' . $row_producto['nombre'] . '</td>'; // Estilos para la columna Nombre
+                echo '<td style="border: 1px solid black; width: 1000px;">' . $row_producto['descripcion'] . '</td>'; // Estilos para la columna Descripción
+                echo '<td style="border: 1px solid black; width: 100px;">' . $row_producto['precio'] . '€</td>'; // Estilos para la columna Precio
+                echo '<td style="border: 1px solid black;">';
+                echo '<form method="post">';
+                echo '<button type="submit" name="boton" value="' . $row_producto['id_producto'] . '">añadir carrito</button>'; // Estilos para el botón "Añadir al carrito"
+                echo '</form>';
+                echo '</td>';
+                echo '</tr>';
             }
-            echo "</table>";
+
+echo '</table>'; // Cerrar tabla
+echo '</div>'; // Cerrar contenedor
+
+
         } else {
             echo "<p style='text-align: center; color:white; background-color:red'>No se encontraron productos para esta categoría.</p>";
         }
