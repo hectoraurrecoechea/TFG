@@ -7,6 +7,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
 // Verificar si el usuario ha iniciado sesión
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+    echo isset($_SESSION['carrito'])."esto es el carrito";
     // Verificar si ya hay productos en el carrito
     if (!isset($_SESSION['carrito'])) {
         // Establecer la conexión a la base de datos (debes completar los datos de conexión)
@@ -24,11 +25,16 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
         if ($resultado_carrito->num_rows > 0) {
             // Inicializar el arreglo de carrito en la sesión
             $_SESSION['carrito'] = array();
+            $_SESSION['carrito_ids'] = array(); // Nuevo arreglo para almacenar IDs de carrito
 
             // Recorrer los resultados y almacenarlos en la sesión
             while ($row = $resultado_carrito->fetch_assoc()) {
+                $id_carrito = $row['id_carrito']; // Obtener el ID de carrito
                 $id_producto = $row['id_producto'];
                 $cantidad = $row['cantidad'];
+
+                // Almacenar el ID de carrito en la sesión
+                $_SESSION['carrito_ids'][] = $id_carrito; // Cambio aquí
 
                 // Obtener información del producto desde la base de datos
                 $sql_info_producto = "SELECT * FROM productos WHERE id_producto = '$id_producto'";
@@ -86,6 +92,7 @@ if ($_SESSION['rol'] == 'administrador') {
     </style>
 </head>
 <body>
+
 <header>
     <div class="container">
         <p class="logo">Panaderia Tina</p>
@@ -104,17 +111,7 @@ if ($_SESSION['rol'] == 'administrador') {
 </header>
 
 <?php
-// Función para eliminar un elemento del carrito
-function eliminarDelCarrito($id_producto) {
-    if (isset($_SESSION['carrito'][$id_producto])) {
-        unset($_SESSION['carrito'][$id_producto]);
-        // Actualizar la base de datos
-        actualizarBaseDeDatos();
-        // Redireccionar a la página para reflejar los cambios
-        header("Location: carrito.php");
-        exit();
-    }
-}
+
 
 // Función para actualizar el carrito con las nuevas cantidades
 function actualizarCarrito($nuevas_cantidades) {
@@ -122,7 +119,7 @@ function actualizarCarrito($nuevas_cantidades) {
         $_SESSION['carrito'][$id_producto]['cantidad'] = $cantidad;
     }
     // Actualizar la base de datos
-    actualizarBaseDeDatos();
+    //actualizarBaseDeDatos();
     // Redireccionar a la página para reflejar los cambios
     header("Location: carrito.php");
     exit();
@@ -136,16 +133,65 @@ function actualizarBaseDeDatos() {
     }
     $dni_usuario = $_SESSION['dni'];
     // Eliminar todos los productos del carrito del usuario
+    //$sql_eliminar = "DELETE FROM carrito WHERE dni = '$dni_usuario'";
+    //$conexion->query($sql_eliminar);
+    // Insertar los productos del carrito actualizado
+   
+    $conexion->close();
+    header("Location: carrito.php");
+    exit();
+}
+
+// Función para eliminar un elemento del carrito
+function eliminarDelCarrito($id_producto) {
+    if (isset($_SESSION['carrito'][$id_producto])) {
+        echo "hola";
+        unset($_SESSION['carrito'][$id_producto]);
+        // Actualizar la base de datos
+        //actualizarBaseDeDatos();
+        // Redireccionar a la página para reflejar los cambios
+        header("Location: carrito.php");
+        exit();
+    }
+}
+
+function vaciarCarrito($dni_usuario) {
+    $conexion = new mysqli("localhost", "root", "12345", "panaderia");
+    if ($conexion->connect_error) {
+        die("Error de conexión: " . $conexion->connect_error);
+    }
+    $dni_usuario = $_SESSION['dni'];
+    // Eliminar todos los productos del carrito del usuario
     $sql_eliminar = "DELETE FROM carrito WHERE dni = '$dni_usuario'";
     $conexion->query($sql_eliminar);
-    // Insertar los productos del carrito actualizado
-    foreach ($_SESSION['carrito'] as $id_producto => $producto) {
-        $id_producto = $producto['id_producto'];
-        $cantidad = $producto['cantidad'];
-        $sql_insertar = "INSERT INTO carrito (dni, id_producto, cantidad) VALUES ('$dni_usuario', '$id_producto', '$cantidad')";
-        $conexion->query($sql_insertar);
-    }
     $conexion->close();
+    unset($_SESSION['carrito']);
+    header("Location: carrito.php");
+    exit();
+}
+
+
+
+function finalizarPedido($dni_usuario){
+    if (!isset($_SESSION['carrito_ids'])) {
+        $_SESSION['carrito_ids'] = array();
+    }
+    
+    $conexion = new mysqli("localhost", "root", "12345", "panaderia");
+    if ($conexion->connect_error) {
+        die("Error de conexión: " . $conexion->connect_error);
+    }
+    foreach ($_SESSION['carrito_ids'] as $id_carrito) {
+        $sql_finalizar = "INSERT INTO pedidos (id_pedido, estado_pedido, fecha_pedido, id_carrito) SELECT NULL, 'pendiente', NOW(), id_carrito FROM carrito 
+        WHERE id_carrito = '$id_carrito'";
+        $conexion->query($sql_finalizar);
+    }
+    // Eliminar los productos del carrito del usuario
+    $sql_eliminar_carrito = "DELETE FROM carrito WHERE dni = '$dni_usuario'";
+    $conexion->query($sql_eliminar_carrito);
+    $conexion->close();
+    header("Location: carrito.php");
+    exit();
 }
 ?>
 
@@ -173,12 +219,12 @@ if (!empty($_SESSION['carrito'])) {
         echo "<td>" . $producto['nombre'] . "</td>";
         echo "<td>" . $producto['descripcion'] . "</td>";
         echo "<td>" . $producto['precio'] . " €</td>";
-        echo "<td><input type='number' name='cantidad[" . $id_producto . "]' min='1' max='10' value='$cantidad'></td>";
+        echo "<td><input type='number' name='cantidad[" . $id_producto . "]' min='1' max='10' value='1'></td>";
         echo "<td>$precio_total €</td>";
         echo "<td>
                 <form method='post'>
                     <input type='hidden' name='id_producto' value='" . $id_producto . "'>
-                    <button type='submit' name='eliminar'>Eliminar</button>
+                    <button type='submit' name='eliminar'>Borrar</button>  
                 </form>
               </td>";
         echo "</tr>";
@@ -187,21 +233,32 @@ if (!empty($_SESSION['carrito'])) {
 
     // Mostrar la suma total
     echo "<p>Total: $total_suma €</p>";
-    // Botón para actualizar el carrito con las nuevas cantidades
-    echo "<button type='submit' name='actualizar_carrito'>Actualizar Carrito</button>";
+    // Botón para vaciar el carrito con las nuevas cantidades
+    echo "<button type='submit' name='vaciarCarrito'>Vaciar Carrito</button>";
+
+    // Botón para finalizar el pedido
+    echo "<input type='hidden' name='dni_usuario' value='".$_SESSION['dni']."'>";
+    echo "<button type='submit' name='finalizarPedido'>Finalizar pedido</button>";
+
     echo "</form>";
 
     // Procesar la actualización del carrito si se envió el formulario
-    if(isset($_POST['actualizar_carrito'])) {
-        if(isset($_POST['cantidad'])) {
-            actualizarCarrito($_POST['cantidad']);
+    if(isset($_POST['vaciarCarrito'])) {
+        if(isset($_POST['dni_usuario'])) {
+            vaciarCarrito($_POST['dni_usuario']);
         }
     }
 
-    // Procesar la eliminación de un producto dels carrito si se hizo clic en el botón "Eliminar"
+    // Procesar la eliminación de un producto del carrito si se hizo clic en el botón "Eliminar"
     if(isset($_POST['eliminar']) && isset($_POST['id_producto'])) {
         eliminarDelCarrito($_POST['id_producto']);
     }
+
+    // Procesar el pedido finalizado si se hizo clic en el botón "Finalizar pedido"
+    if(isset($_POST['finalizarPedido']) && isset($_POST['dni_usuario'])) {
+        finalizarPedido($_POST['dni_usuario']);
+    }
+    
 
 } else {
     echo "<p>No hay productos en el carrito.</p>";

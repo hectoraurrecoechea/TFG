@@ -255,6 +255,79 @@ if ($conn->connect_error) {
 $sql_categorias = "SELECT id_categoria, nombre, descripcion FROM categorias";
 $result_categorias = $conn->query($sql_categorias);
 
+// Definir la función con un parámetro
+function miFuncion($parametro) {
+    // Código de la función aquí que puede utilizar $parametro
+    $conexion = new mysqli("localhost", "root", "12345","panaderia");
+    if ($conexion->connect_error) {
+        die("Error de conexión: " . $conexion->connect_error);
+    }
+    
+    $dni_usuario = $_SESSION['dni'];
+    
+    // Obtener el ID del carrito
+    $sql_idCarrito = "SELECT id_carrito FROM `carrito` WHERE dni='$dni_usuario'";
+    $result_idCarrito = $conexion->query($sql_idCarrito);
+    
+    if ($result_idCarrito->num_rows > 0) {
+        echo "estoy aqui";
+        // Extraer el resultado de la consulta
+        $row = $result_idCarrito->fetch_assoc();
+        $id_carrito = $row['id_carrito'];
+        //HACEMOS COUNT ---------------------------
+        $sql_count = "SELECT COUNT(*) FROM `carrito` WHERE dni='$dni_usuario' AND id_producto='$parametro'";
+        $result_count = $conexion->query($sql_count);
+        // Verificar si la consulta fue exitosa
+        if ($result_count) {
+            // Obtener el resultado del conteo de filas
+            $row_count = $result_count->fetch_row();
+            $count = $row_count[0];
+
+    
+            if ($count > 0) {
+                // Insertar el producto en el carrito
+                $sql_insertar = "UPDATE `carrito` SET `cantidad`=cantidad+1 WHERE dni='$dni_usuario' AND id_producto='$parametro'";
+                if ($conexion->query($sql_insertar) === TRUE) {
+                    echo "Producto actualizado correctamente.";
+                } else {
+                    echo "Error al actualizar el producto: " . $conexion->error;
+                }
+            } else {
+                // Insertar el producto en el carrito
+                $sql_insertar = "INSERT INTO carrito (id_carrito,dni, id_producto, cantidad) VALUES ('$id_carrito','$dni_usuario', '$parametro', 1)";
+                if ($conexion->query($sql_insertar) === TRUE) {
+                    echo "Producto insertado correctamente.";
+                } else {
+                    echo "Error al insertar el producto: " . $conexion->error;
+                }
+            }
+        } else {
+            echo "Error en la consulta: " . $conexion->error;
+        }
+    }
+    
+    else {
+        $cantidad = 1;
+     // Insertar el producto en el carrito
+     $sql_insertar = "INSERT INTO carrito ( dni, id_producto,cantidad) VALUES ( '$dni_usuario', '$parametro','$cantidad')";
+     //$sql_insertar = "INSERT INTO `carrito`(`id_carrito`, `dni`) VALUES ('$id_carrito','$dni_usuario')";
+     if ($conexion->query($sql_insertar) === TRUE) {
+         echo "Producto insertado correctamente.";
+     } else {
+         echo "Error al insertar el producto: " . $conexion->error;
+     }   
+    }
+    
+    $conexion->close();
+}
+
+// Verificar si se ha enviado el formulario
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["boton"])) {
+    // Llamar a la función y pasar un parámetro
+    $id_producto = $_POST["boton"];
+    miFuncion($id_producto);
+}
+
 // Verificar si se encontraron categorías
 if ($result_categorias->num_rows > 0) {
     // Iterar sobre cada categoría
@@ -267,6 +340,7 @@ if ($result_categorias->num_rows > 0) {
         $sql_productos = "SELECT id_producto,nombre, descripcion, precio FROM productos WHERE id_categoria = $categoria_id";
         $result_productos = $conn->query($sql_productos);
 
+        
         // Verificar si se encontraron productos
         if ($result_productos->num_rows > 0) {
             // Mostrar los productos en una tabla
@@ -274,10 +348,17 @@ if ($result_categorias->num_rows > 0) {
             echo "<tr><th>Nombre</th><th>Descripción</th><th>Precio</th></tr>";
             while ($row_producto = $result_productos->fetch_assoc()) {
                 echo "<tr>";
+                
                 echo "<td>" . $row_producto["nombre"] . "</td>";
                 echo "<td>" . $row_producto["descripcion"] . "</td>";
                 echo "<td>" . $row_producto["precio"] . "</td>";
-                echo "<td><a href='productos.php?id_producto=" . $row_producto["id_producto"] . "'>Añadir</a></td>";
+                echo "<td>";
+                echo '<form method="post">';
+                echo '<button type="submit" name="boton" value='.$row_producto['id_producto'].'>añadir carrito</button>';
+                echo '</form>';
+                echo "</td>";
+
+                    
                 echo "</tr>";
             }
             echo "</table>";
