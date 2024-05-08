@@ -183,23 +183,35 @@ function vaciarCarrito($dni_usuario) {
 
 
 function finalizarPedido($dni_usuario){
-    if (!isset($_SESSION['carrito_ids'])) {
-        $_SESSION['carrito_ids'] = array();
-    }
     
     $conexion = new mysqli("localhost", "root", "12345", "panaderia");
     if ($conexion->connect_error) {
         die("Error de conexión: " . $conexion->connect_error);
     }
-    foreach ($_SESSION['carrito_ids'] as $id_carrito) {
-        $sql_finalizar = "INSERT INTO pedidos (id_pedido, estado_pedido, fecha_pedido, id_carrito) SELECT NULL, 'pendiente', NOW(), id_carrito FROM carrito 
-        WHERE id_carrito = '$id_carrito'";
+    
+    $fecha_pedido = date("Y-m-d H:i:s");
+        $sql_finalizar = "INSERT INTO `pedidos` (`id_pedido`, `estado_pedido`, `dni`, `fecha_pedido`) VALUES (NULL, '0', '$dni_usuario', '$fecha_pedido'); ";
         $conexion->query($sql_finalizar);
-    }
+
+        $sql_consulta = "SELECT id_pedido FROM pedidos WHERE dni = '$dni_usuario' AND fecha_pedido = '$fecha_pedido'";
+        $result_consulta = $conexion->query($sql_consulta); //EEJCUTAR LA CONSULTA ANTERIOR JEJEJE
+        
+        $row = $result_consulta->fetch_assoc();
+        $id_pedido = $row['id_pedido'];
+        
+        foreach ($_SESSION['carrito'] as $id_producto => $producto) {
+            $sql_insertar = "INSERT INTO `pedidos_productos`(`id_pedido`, `id_producto`, `cantidad`) VALUES ('$id_pedido',".$producto['id_producto'].",".$producto['cantidad'].")";
+            if ($conexion->query($sql_insertar)){
+                echo "insertado correctamente";
+            }
+
+        }
+
     // Eliminar los productos del carrito del usuario
-    $sql_eliminar_carrito = "DELETE FROM carrito WHERE dni = '$dni_usuario'";
-    $conexion->query($sql_eliminar_carrito);
+    $sql_eliminar = "DELETE FROM carrito WHERE dni = '$dni_usuario'";
+    $conexion->query($sql_eliminar);
     $conexion->close();
+    unset($_SESSION['carrito']);
     header("Location: carrito.php");
     exit();
 }

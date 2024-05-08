@@ -25,7 +25,7 @@ foreach ($_SESSION['carrito_ids'] as $id_carrito) {
     $fecha_pedido = date("Y-m-d H:i:s");
     $estado_pedido = "pendiente";
     $dni_usuario = $_SESSION['dni'];
-    $sql_insert_pedido = "INSERT INTO pedidos (fecha_pedido, estado_pedido, id_carrito,dni) VALUES ('$fecha_pedido', '$estado_pedido', '$id_carrito','$dni_usuario')";
+    $sql_insert_pedido = "INSERT INTO pedidos (fecha_pedido, estado_pedido,dni) VALUES ('$fecha_pedido', '$estado_pedido','$dni_usuario')";
     
     if ($conexion->query($sql_insert_pedido) === TRUE) {
         // Pedido insertado correctamente

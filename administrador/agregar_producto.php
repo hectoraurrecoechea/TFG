@@ -45,6 +45,7 @@
         
         <input type="submit" value="Agregar Producto">
     </form>
+    <a href="productos_admin.php">Volver</a>
 </body>
 </html>
 
