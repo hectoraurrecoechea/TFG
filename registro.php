@@ -16,6 +16,9 @@
         <label for="pass">Contraseña:</label>
         <input type="password" name="pass" required><br>
 
+        <label for="pass_confirm">Confirmar Contraseña:</label>
+        <input type="password" name="pass_confirm" required><br>
+
         <label for="nombre">Nombre:</label>
         <input type="text" name="nombre" required><br>
 

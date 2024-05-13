@@ -186,7 +186,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["boton"])) {
 if ($result_categorias->num_rows > 0) {
     // Iterar sobre cada categoría
     while ($row_categoria = $result_categorias->fetch_assoc()) {
-        echo "<h2 style='text-align: center;'>Categoría: " . $row_categoria["nombre"] . "</h2>";
+        echo "<h2 style='text-align: center;'>" . $row_categoria["nombre"] . "</h2>";
         echo "<p style='text-align: center;'>" . $row_categoria["descripcion"] . "</p>";
 
         // Consulta SQL para obtener todos los productos de la categoría actual

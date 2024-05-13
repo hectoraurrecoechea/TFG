@@ -113,52 +113,51 @@ if ($_SESSION['rol'] == 'administrador') {
 </header>
 
 <?php
-
-
-// Función para actualizar el carrito con las nuevas cantidades
-function actualizarCarrito($nuevas_cantidades) {
-    foreach ($nuevas_cantidades as $id_producto => $cantidad) {
-        $_SESSION['carrito'][$id_producto]['cantidad'] = $cantidad;
+// Procesar la actualización del carrito si se envió el formulario
+if(isset($_POST['actualizarCantidad'])) {
+    $id_producto = $_POST['id_producto'];
+    $cantidad = $_POST['cantidad'];
+    // Limitar la cantidad a un mínimo de 1 y un máximo de 10
+    if($cantidad < 1) {
+        $cantidad = 1;
+    } elseif($cantidad > 10) {
+        $cantidad = 10;
     }
-    // Actualizar la base de datos
-    actualizarBaseDeDatos();
-    // Redireccionar a la página para reflejar los cambios
-    header("Location: carrito.php");
-    exit();
+    actualizarCantidadProducto($id_producto, $cantidad);
 }
 
-// Función para actualizar la base de datos con el contenido del carrito
-function actualizarBaseDeDatos($borrarProducto = false, $id_producto = null) {
+// Función para actualizar la cantidad de un producto en el carrito
+function actualizarCantidadProducto($id_producto, $cantidad) {
+    $_SESSION['carrito'][$id_producto]['cantidad'] = $cantidad;
+
+    // Actualizar la base de datos
+    actualizarBaseDeDatos($id_producto, $cantidad);
+}
+
+// Función para actualizar la base de datos con la nueva cantidad del producto
+function actualizarBaseDeDatos($id_producto, $cantidad) {
     $conexion = new mysqli("localhost", "root", "12345", "panaderia");
     if ($conexion->connect_error) {
         die("Error de conexión: " . $conexion->connect_error);
     }
+
     $dni_usuario = $_SESSION['dni'];
     
-    // Si se va a borrar un producto específico
-    if ($borrarProducto && $id_producto !== null) {
-        // Eliminar el producto del carrito del usuario
-        $sql_eliminar = "DELETE FROM carrito WHERE dni = '$dni_usuario' AND id_producto = '$id_producto'";
-        $conexion->query($sql_eliminar);
-    } else {
-        // Si se va a vaciar todo el carrito del usuario
-        $sql_eliminar = "DELETE FROM carrito WHERE dni = '$dni_usuario'";
-        $conexion->query($sql_eliminar);
-    }
+    // Actualizar la cantidad del producto en la base de datos
+    $sql_actualizar = "UPDATE carrito SET cantidad = '$cantidad' WHERE dni = '$dni_usuario' AND id_producto = '$id_producto'";
+    $conexion->query($sql_actualizar);
     
     $conexion->close();
-    header("Location: carrito.php");
-    exit();
 }
 
 // Función para eliminar un elemento del carrito
 function eliminarDelCarrito($id_producto) {
-    //tenemos que hacer un unset para eliminar el producto de la BD
+    // Tenemos que hacer un unset para eliminar el producto de la BD
     if (isset($_SESSION['carrito'][$id_producto])) {
         unset($_SESSION['carrito'][$id_producto]);
         // Actualizar la base de datos
         $id_producto_a_eliminar = $id_producto; // Reemplaza 123 por el ID del producto que deseas eliminar
-        actualizarBaseDeDatos(true, $id_producto_a_eliminar);
+        actualizarBaseDeDatos($id_producto_a_eliminar, 0); // Establece la cantidad a 0 para eliminarlo
         // Redireccionar a la página para reflejar los cambios
         header("Location: carrito.php");
         exit();
@@ -179,8 +178,6 @@ function vaciarCarrito($dni_usuario) {
     header("Location: carrito.php");
     exit();
 }
-
-
 
 function finalizarPedido($dni_usuario){
     
@@ -241,12 +238,19 @@ if (!empty($_SESSION['carrito'])) {
         echo "<td>" . $producto['nombre'] . "</td>";
         echo "<td>" . $producto['descripcion'] . "</td>";
         echo "<td>" . $producto['precio'] . " €</td>";
-        //echo "<td><input type='number' name='cantidad[$id_producto]' min='1' max='10' value='" . $producto['cantidad'] . "'></td>";
         echo "<td><label>".$producto['cantidad']."</label></td>";
         echo "<td>
-        <button>+</button>
-        <button>-</button>
-        </td>";
+                <form method='post'>
+                    <input type='hidden' name='id_producto' value='" . $id_producto . "'>
+                    <input type='hidden' name='cantidad' value='" . ($cantidad + 1) . "'>
+                    <button type='submit' name='actualizarCantidad'>+</button>  
+                </form>
+                <form method='post'>
+                    <input type='hidden' name='id_producto' value='" . $id_producto . "'>
+                    <input type='hidden' name='cantidad' value='" . ($cantidad - 1) . "'>
+                    <button type='submit' name='actualizarCantidad'>-</button>  
+                </form>
+              </td>";
         echo "<td>$precio_total €</td>";
         echo "<td>
                 <form method='post'>

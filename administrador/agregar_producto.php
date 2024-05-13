@@ -16,7 +16,16 @@
         <textarea id="descripcion" name="descripcion" cols="50" rows="10"></textarea><br><br>
         
         <label for="precio">Precio:</label><br>
-        <input type="number" id="precio" name="precio" step="0.01" placeholder="0.00">
+        <input type="number" id="precio" name="precio" step="0.01" min="0" placeholder="0.00" oninput="validarPrecio(this)">
+        <script>
+        function validarPrecio(input) {
+            if (input.value < 0) {
+                input.setCustomValidity('El precio no puede ser negativo');
+            } else {
+                input.setCustomValidity('');
+            }
+        }
+        </script>
         
         <label for="categoria">Categoría:</label><br>
         <select id="categoria" name="categoria">
@@ -48,5 +57,3 @@
     <a href="productos_admin.php">Volver</a>
 </body>
 </html>
-
-
