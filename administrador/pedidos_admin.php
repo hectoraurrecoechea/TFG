@@ -17,6 +17,17 @@
         th {
             background-color: #f2f2f2;
         }
+        /* Estilos para los diferentes estados de pedido */
+        .rojo {
+            background-color: red;
+        }
+        .naranja {
+            background-color: orange;
+        }
+        .verde {
+            background-color: green;
+        }
+
     </style>
 </head>
 <body>
@@ -30,19 +41,12 @@
         <a href="pedidos_admin.php">Pedidos</a>
         <a href="cerrarSesion_admin.php">Cerrar sesión</a>
     </div>
-    <h1>Listado de Productos</h1>
+    <h1>Listado de Pedidos</h1>
     <table>
         <tr>
             <th>ID Pedido</th>
             <th>Fecha del Pedido</th>
             <th>Estado del Pedido</th>
-            <th>ID Producto</th>
-            <th>Cantidad</th>
-            <th>Nombre del Producto</th>
-            <th>DNI del Cliente</th>
-            <th>Correo del Cliente</th>
-            <th>Teléfono del Cliente</th>
-            <th>Nombre del Cliente</th>
         </tr>
         <?php
         session_start();
@@ -65,40 +69,53 @@
         }
 
         // Consulta SQL para obtener los datos
-        $sql = "SELECT pedidos.id_pedido, pedidos.fecha_pedido, pedidos.estado_pedido, 
-                pedidos_productos.id_producto, pedidos_productos.cantidad, 
-                productos.nombre AS nombre_producto, 
-                clientes.dni, clientes.correo, clientes.telefono, 
-                CONCAT(clientes.nombre, ' ', clientes.apellido1) AS nombre_cliente
-                FROM pedidos
-                INNER JOIN pedidos_productos ON pedidos.id_pedido = pedidos_productos.id_pedido
-                INNER JOIN productos ON pedidos_productos.id_producto = productos.id_producto
-                INNER JOIN clientes ON pedidos.dni = clientes.dni";
+        $sql = "SELECT id_pedido, fecha_pedido, estado_pedido FROM pedidos";
 
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
             // Mostrar datos
-            while($row = $result->fetch_assoc()) {
-                echo "<tr>
+            while ($row = $result->fetch_assoc()) {
+                // Determinar la clase CSS basada en el estado del pedido
+                $clase_estado = '';
+                switch ($row["estado_pedido"]) {
+                    case 0:
+                        $clase_estado = 'rojo';
+                        break;
+                    case 1:
+                        $clase_estado = 'naranja';
+                        break;
+                    case 2:
+                        $clase_estado = 'verde';
+                        break;
+                }
+
+                // Imprimir la fila de la tabla con la clase CSS correspondiente
+                echo "<tr class='$clase_estado'>
                         <td>".$row["id_pedido"]."</td>
                         <td>".$row["fecha_pedido"]."</td>
-                        <td>".$row["estado_pedido"]."</td>
-                        <td>".$row["id_producto"]."</td>
-                        <td>".$row["cantidad"]."</td>
-                        <td>".$row["nombre_producto"]."</td>
-                        <td>".$row["dni"]."</td>
-                        <td>".$row["correo"]."</td>
-                        <td>".$row["telefono"]."</td>
-                        <td>".$row["nombre_cliente"]."</td>
-                    </tr>";
+                        <td>
+                            <form method='post' action='actualizar_estado_pedido.php'>
+                                <input type='hidden' name='id_pedido' value='".$row["id_pedido"]."'>
+                                <select name='estado_pedido'>
+                                    <option value='0' ".($row["estado_pedido"] == 0 ? "selected" : "").">No realizado</option>
+                                    <option value='1' ".($row["estado_pedido"] == 1 ? "selected" : "").">En proceso</option>
+                                    <option value='2' ".($row["estado_pedido"] == 2 ? "selected" : "").">Finalizado</option>
+                                </select>
+                                <input type='submit' value='Actualizar'>
+                            </form>
+                        </td>
+
+                        <td><a href='mas_informacion.php?id_pedido=".$row["id_pedido"]."'>Más</a></td>
+                      </tr>";
             }
+            
         } else {
-            echo "<tr><td colspan='10'>No se encontraron resultados.</td></tr>";
+            echo "<tr><td colspan='3'>No se encontraron resultados.</td></tr>";
         }
         $conn->close();
         ?>
     </table>
-    </table>
+    
 </body>
 </html>

@@ -39,11 +39,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
             exit;
         } else {
-            echo "fallo 2";
+            $_SESSION['login_error'] = true;
+            header("Location: index.php");
             exit;
         }
     } else {
-        echo "fallo 1";
+        $_SESSION['login_error'] = true;
+        header("Location: index.php");
         exit;
     }
 

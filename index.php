@@ -21,6 +21,13 @@
                     <input type="password" id="pass" name="pass" required>
                 </div>
                 <button type="submit">Iniciar Sesión</button>
+                <?php
+                session_start();
+                if (isset($_SESSION['login_error']) && $_SESSION['login_error']) {
+                    echo "<p style='background-color: red; color: white; padding: 5px;'>USUARIO Y CONTRASEÑA INCORRECTOS.</p>";
+                    unset($_SESSION['login_error']);
+                }
+                ?>
             </form>
             <p>¿No estás registrado? <a href="registro.php">Regístrate aquí</a>.</p><br>
             <p>¿Has olvidado la contraseña?<a href="cambiarContrasena.php">Cambiar contraseña</a></p>
