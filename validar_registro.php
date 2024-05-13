@@ -27,6 +27,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
+    // Hashear la contraseña
+    $pass_hasheada = password_hash($pass, PASSWORD_DEFAULT);
+
     // Conexión a la base de datos
     $servername = "localhost";
     $username = "root";
@@ -37,22 +40,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Error de conexión: " . $conn->connect_error);
     }
 
-    // Comprobación de existencia de DNI y correo
-    $sql_dni = "SELECT * FROM clientes WHERE dni = ?";
-    $stmt_dni = $conn->prepare($sql_dni);
-    $stmt_dni->bind_param("s", $dni);
-    $stmt_dni->execute();
-    $result_dni = $stmt_dni->get_result();
-
+    // Comprobación de existencia de correo y teléfono
     $sql_correo = "SELECT * FROM clientes WHERE correo = ?";
     $stmt_correo = $conn->prepare($sql_correo);
     $stmt_correo->bind_param("s", $correo);
     $stmt_correo->execute();
     $result_correo = $stmt_correo->get_result();
 
-    if ($result_dni->num_rows > 0 || $result_correo->num_rows > 0) {
-        $_SESSION['dni_existente'] = $result_dni->num_rows > 0;
+    $sql_telefono = "SELECT * FROM clientes WHERE telefono = ?";
+    $stmt_telefono = $conn->prepare($sql_telefono);
+    $stmt_telefono->bind_param("s", $telefono);
+    $stmt_telefono->execute();
+    $result_telefono = $stmt_telefono->get_result();
+
+    if ($result_correo->num_rows > 0 || $result_telefono->num_rows > 0) {
         $_SESSION['correo_existente'] = $result_correo->num_rows > 0;
+        $_SESSION['telefono_existente'] = $result_telefono->num_rows > 0;
         header("Location: repetir.php");
         exit;
     } else {
@@ -60,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql_insert = "INSERT INTO clientes (dni, correo, pass, nombre, apellido1, apellido2, telefono, rol) 
                        VALUES (?, ?, ?, ?, ?, ?, ?, 'usuario')";
         $stmt_insert = $conn->prepare($sql_insert);
-        $stmt_insert->bind_param("sssssss", $dni, $correo, $pass, $nombre, $apellido1, $apellido2, $telefono);
+        $stmt_insert->bind_param("sssssss", $dni, $correo, $pass_hasheada, $nombre, $apellido1, $apellido2, $telefono);
         
         if ($stmt_insert->execute()) {
             echo "El usuario se ha registrado correctamente.";
@@ -73,8 +76,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     
     // Cierre de conexiones y preparaciones
-    $stmt_dni->close();
     $stmt_correo->close();
+    $stmt_telefono->close();
     $stmt_insert->close();
     $conn->close();
 }
