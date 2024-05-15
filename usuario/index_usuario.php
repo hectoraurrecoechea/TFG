@@ -44,13 +44,8 @@ if ($_SESSION['rol'] == 'administrador') {
          </nav>
      </div>
  </header>
-
-
-
-
  <section id="hero">
      <H1>LA MEJOR <br> PANADERIA Y REPOSTERIA</H1>
-     <button><a href="../REGISTRARSE/registro.html">REGÍSTRATE</a></button>
  </section>
 
  <section id="nuestros-productos">
@@ -75,7 +70,7 @@ if ($_SESSION['rol'] == 'administrador') {
 
  <section id="pedido">
      <h2>¿YA TIENES PENSADO QUE PEDIR?</h2>
-     <button><a href="../PRODUCTOS/productos.html">REALIZA TU PEDIDO</a></button>
+     <button><a href="productos.php">REALIZA TU PEDIDO</a></button>
  </section>
  <div class="mapa">
     <iframe

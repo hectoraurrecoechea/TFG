@@ -74,8 +74,8 @@ if ($_SESSION['rol'] == 'administrador') {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>¡Bienvenidos!</title>
-    <link rel="stylesheet" href="style_historia.css">
-    <style>
+    <link rel="stylesheet" href="estilo_carrito.css">
+    <!--<style>
        table {
            width: 80%;
            margin: 0 auto;
@@ -91,7 +91,7 @@ if ($_SESSION['rol'] == 'administrador') {
        th {
            background-color: #f2f2f2;
        }
-    </style>
+    </style>-->
 </head>
 <body>
 
@@ -150,18 +150,34 @@ function actualizarBaseDeDatos($id_producto, $cantidad) {
     $conexion->close();
 }
 
-// Función para eliminar un elemento del carrito
+// Función para eliminar un elemento del carrito y de la base de datos
 function eliminarDelCarrito($id_producto) {
-    // Tenemos que hacer un unset para eliminar el producto de la BD
+    // Verificar si el producto está en el carrito
     if (isset($_SESSION['carrito'][$id_producto])) {
+        // Eliminar el producto del carrito
         unset($_SESSION['carrito'][$id_producto]);
-        // Actualizar la base de datos
-        $id_producto_a_eliminar = $id_producto; // Reemplaza 123 por el ID del producto que deseas eliminar
-        actualizarBaseDeDatos($id_producto_a_eliminar, 0); // Establece la cantidad a 0 para eliminarlo
+        // Actualizar la base de datos para eliminar el producto
+        eliminarDeBaseDeDatos($id_producto);
         // Redireccionar a la página para reflejar los cambios
         header("Location: carrito.php");
         exit();
     }
+}
+
+// Función para eliminar un producto de la base de datos
+function eliminarDeBaseDeDatos($id_producto) {
+    $conexion = new mysqli("localhost", "root", "12345", "panaderia");
+    if ($conexion->connect_error) {
+        die("Error de conexión: " . $conexion->connect_error);
+    }
+
+    $dni_usuario = $_SESSION['dni'];
+    
+    // Eliminar el producto de la base de datos
+    $sql_eliminar = "DELETE FROM carrito WHERE dni = '$dni_usuario' AND id_producto = '$id_producto'";
+    $conexion->query($sql_eliminar);
+    
+    $conexion->close();
 }
 
 function vaciarCarrito($dni_usuario) {
@@ -243,35 +259,37 @@ if (!empty($_SESSION['carrito'])) {
                 <form method='post'>
                     <input type='hidden' name='id_producto' value='" . $id_producto . "'>
                     <input type='hidden' name='cantidad' value='" . ($cantidad + 1) . "'>
-                    <button type='submit' name='actualizarCantidad'>+</button>  
+                    <button type='submit' name='actualizarCantidad' class='botonSuma'>+</button>  
                 </form>
                 <form method='post'>
                     <input type='hidden' name='id_producto' value='" . $id_producto . "'>
                     <input type='hidden' name='cantidad' value='" . ($cantidad - 1) . "'>
-                    <button type='submit' name='actualizarCantidad'>-</button>  
+                    <button type='submit' name='actualizarCantidad' class='botonSuma'>-</button>  
                 </form>
               </td>";
         echo "<td>$precio_total €</td>";
         echo "<td>
-                <form method='post'>
-                    <input type='hidden' name='id_producto' value='" . $id_producto . "'>
-                    <button type='submit' name='eliminar'>Borrar</button>  
-                </form>
-              </td>";
-        echo "</tr>";
-    }
-    echo "</table>";
-
+        <form method='post'>
+            <input type='hidden' name='id_producto' value='" . $id_producto . "'>
+            <button type='submit' name='eliminar' class='boton2'>Borrar</button>  
+        </form>
+      </td>";
+echo "</tr>";
+}
+echo "</table>";
+echo "<div class='container-central'>";
     // Mostrar la suma total
-    echo "<p>Total: $total_suma €</p>";
+    echo "<p class='total'>Total: $total_suma €</p>";
     // Botón para vaciar el carrito con las nuevas cantidades
-    echo "<button type='submit' name='vaciarCarrito'>Vaciar Carrito</button>";
+    echo "<button type='submit' name='vaciarCarrito' class='boton'>Vaciar Carrito</button>";
+    echo "<br><br>";
 
     // Botón para finalizar el pedido
     echo "<input type='hidden' name='dni_usuario' value='".$_SESSION['dni']."'>";
-    echo "<button type='submit' name='finalizarPedido'>Finalizar pedido</button>";
+    echo "<button type='submit' name='finalizarPedido' class='boton'>Finalizar pedido</button>";
+echo "</div>";
+echo "</form>";
 
-    echo "</form>";
 
     // Procesar la actualización del carrito si se envió el formulario
     if(isset($_POST['vaciarCarrito'])) {
@@ -292,8 +310,8 @@ if (!empty($_SESSION['carrito'])) {
     
 
 } else {
-    echo "<p>No hay productos en el carrito.</p>";
+    echo "<p class='noProductos'>No hay productos en el carrito.</p>";
 }
 ?>
-</body>
+</body> 
 </html>

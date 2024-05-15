@@ -1,0 +1,152 @@
+body{
+    font-family: 'roboto',sans-serif;
+    margin: 0;
+    background-color: #d49537 ;/* Cambia el color de fondo */
+}
+h1{
+    font-size: 4em;
+    color: rgb(255, 255, 0);
+}
+h2{
+    font-size: 2.3em;
+    text-align: center;
+}
+h3{
+    font-size:1.7em;
+} 
+p{
+    font-size: 1.3em;
+}
+ul{
+    list-style: none;
+}
+header {
+    background-color: rgb(225, 225, 225);
+    width: 100%;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0%;
+    z-index: 2;
+}
+header .logo {
+    margin: 0;
+    padding: 25px 30px;
+    font-weight: bold;
+    color: #edb45e;
+    font-size: 5em;
+}
+.container {
+    max-width: 1400px;
+    margin: auto;
+}
+header .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+header a {
+    text-decoration: none;
+    padding: 5px 12px;
+    font-weight: bold;
+    color: black;
+}
+header a:hover {
+    background-color: black;
+    color: white;
+    text-transform: uppercase;
+}
+nav li {
+    display: inline-flex;
+    margin-bottom: 10px;
+}
+
+table {
+    width: 80%;
+    margin: 0 auto;
+    border-collapse: collapse; 
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+/* Estilos para los botones */
+.boton {
+    width: 25%;
+    padding: 8px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.boton:hover {
+    background-color: #45a049;
+}
+.boton2 {
+    width: 100%;
+    padding: 8px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.boton2:hover {
+    background-color: #45a049;
+}
+
+/* Estilos para el contenedor del carrito */
+.container-carrito {
+    text-align: center; /* Centrar el contenido */
+    margin-top: 20px; /* Espacio superior */
+}
+
+/* Estilos para el total */
+.total {
+    font-size: 18px; /* Tamaño de fuente */
+    margin-bottom: 10px; /* Espacio inferior */
+}
+
+/* Estilos para los botones de acción */
+.action-buttons {
+    margin-top: 10px; /* Espacio superior */
+}
+.container-central {
+    text-align: center;
+    margin: 0 auto;
+    width: 50%; /* ajusta el ancho según tu preferencia */
+}
+.total{
+    font-size: 2em;
+}
+
+.botonSuma{
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 50%; /* Esto hace que los botones sean redondos */
+}
+.noProductos{
+    text-align: center;
+    background-color: red;
+    color: white;
+    font-size:3em;
+}

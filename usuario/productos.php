@@ -18,7 +18,7 @@ if ($_SESSION['rol'] == 'administrador') {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>¡Bienvenidos!</title>
-    <link rel="stylesheet" href="style_historia.css">
+    <link rel="stylesheet" href="estilo_productos.css">
    
 </head>
 <body>
@@ -124,7 +124,7 @@ function miFuncion($parametro) {
     $result_idCarrito = $conexion->query($sql_idCarrito);
     
     if ($result_idCarrito->num_rows > 0) {
-        echo "estoy aqui";
+        //echo "estoy aqui";
         // Extraer el resultado de la consulta
         $row = $result_idCarrito->fetch_assoc();
         $id_carrito = $row['id_carrito'];
@@ -142,7 +142,7 @@ function miFuncion($parametro) {
                 // Insertar el producto en el carrito
                 $sql_insertar = "UPDATE `carrito` SET `cantidad`=cantidad+1 WHERE dni='$dni_usuario' AND id_producto='$parametro'";
                 if ($conexion->query($sql_insertar) === TRUE) {
-                    echo "Producto actualizado correctamente.";
+                    //echo "Producto actualizado correctamente.";
                 } else {
                     echo "Error al actualizar el producto: " . $conexion->error;
                 }
@@ -150,7 +150,7 @@ function miFuncion($parametro) {
                 // Insertar el producto en el carrito
                 $sql_insertar = "INSERT INTO carrito (id_carrito,dni, id_producto, cantidad) VALUES ('$id_carrito','$dni_usuario', '$parametro', 1)";
                 if ($conexion->query($sql_insertar) === TRUE) {
-                    echo "Producto insertado correctamente.";
+                    //echo "Producto insertado correctamente.";
                 } else {
                     echo "Error al insertar el producto: " . $conexion->error;
                 }
@@ -166,7 +166,7 @@ function miFuncion($parametro) {
      $sql_insertar = "INSERT INTO carrito ( dni, id_producto,cantidad) VALUES ( '$dni_usuario', '$parametro','$cantidad')";
      //$sql_insertar = "INSERT INTO `carrito`(`id_carrito`, `dni`) VALUES ('$id_carrito','$dni_usuario')";
      if ($conexion->query($sql_insertar) === TRUE) {
-         echo "Producto insertado correctamente.";
+         //echo "Producto insertado correctamente.";
      } else {
          echo "Error al insertar el producto: " . $conexion->error;
      }   
@@ -188,6 +188,7 @@ if ($result_categorias->num_rows > 0) {
     while ($row_categoria = $result_categorias->fetch_assoc()) {
         echo "<h2 style='text-align: center;'>" . $row_categoria["nombre"] . "</h2>";
         echo "<p style='text-align: center;'>" . $row_categoria["descripcion"] . "</p>";
+        
 
         // Consulta SQL para obtener todos los productos de la categoría actual
         $categoria_id = $row_categoria["id_categoria"];
@@ -197,31 +198,25 @@ if ($result_categorias->num_rows > 0) {
         
         // Verificar si se encontraron productos
         if ($result_productos->num_rows > 0) {
-            // Mostrar los productos en una tabla
-            echo '<div style="text-align: center;">'; // Contenedor para centrar la tabla
-            echo '<table style="border-collapse: collapse; margin: 0 auto;">'; // Estilos para centrar la tabla y colapsar los bordes
-            echo '<tr style="background-color: white; color: black;">'; // Fila para el encabezado
-            echo '<th style="width: 100px; border: 1px solid black;">Nombre</th>'; // Estilos para la columna Nombre
-            echo '<th style="width: 500px; border: 1px solid black;">Descripción</th>'; // Estilos para la columna Descripción
-            echo '<th style="width: 40px; border: 1px solid black;">Precio</th>'; // Estilos para la columna Precio
-            echo '<th style="border: 1px solid black;">&nbsp;</th>'; // Estilos para la columna "Añadir al carrito"
-            echo '</tr>'; // Cerrar fila de encabezado
+            // Abrir la tabla
+            echo "<table>";
+            echo "<tr><th>Nombre</th><th>Descripción</th><th>Precio</th><th></th></tr>";
 
             while ($row_producto = $result_productos->fetch_assoc()) {
             echo '<tr>';
-                echo '<td style="border: 1px solid black; width: 200px;">' . $row_producto['nombre'] . '</td>'; // Estilos para la columna Nombre
-                echo '<td style="border: 1px solid black; width: 1000px;">' . $row_producto['descripcion'] . '</td>'; // Estilos para la columna Descripción
-                echo '<td style="border: 1px solid black; width: 100px;">' . $row_producto['precio'] . '€</td>'; // Estilos para la columna Precio
-                echo '<td style="border: 1px solid black;">';
+                echo '<td class="nombre">' . $row_producto['nombre'] . '</td>';
+                echo '<td class="descripcion">' . $row_producto['descripcion'] . '</td>'; 
+                echo '<td class="precio">' . $row_producto['precio'] . '€</td>';
+                echo '<td ">';
                 echo '<form method="post">';
-                echo '<button type="submit" name="boton" value="' . $row_producto['id_producto'] . '">añadir carrito</button>'; // Estilos para el botón "Añadir al carrito"
+                echo '<button type="submit" name="boton" value="' . $row_producto['id_producto'] . '" class="boton">AÑADIR CARRITO</button>'; // Estilos para el botón "Añadir al carrito"
                 echo '</form>';
                 echo '</td>';
                 echo '</tr>';
             }
 
-echo '</table>'; // Cerrar tabla
-echo '</div>'; // Cerrar contenedor
+            echo '</table>'; // Cerrar tabla
+            echo '</div>'; // Cerrar contenedor
 
 
         } else {

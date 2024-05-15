@@ -19,7 +19,7 @@ if ($_SESSION['rol'] == 'administrador') {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>¡Bienvenidos!</title>
-    <link rel="stylesheet" href="style_historia.css">
+    <link rel="stylesheet" href="estilo_historia.css">
 </head>
 <body>
 <header>
@@ -45,17 +45,29 @@ if ($_SESSION['rol'] == 'administrador') {
     Etiam nibh augue, sollicitudin dignissim posuere et, porttitor in tellus. Proin dapibus odio nec eleifend posuere. Suspendisse id erat venenatis, consequat purus quis, cursus massa. Cras consectetur nisi non massa congue mollis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam lorem enim, consectetur eget odio eget, facilisis facilisis purus. Maecenas sit amet ultricies lectus, nec facilisis magna. Integer aliquet rutrum risus, quis pretium eros gravida non. <br><br><br>
     
     Praesent sit amet urna justo. Maecenas nec blandit sem. Sed elementum sed arcu nec eleifend. Aliquam a ultricies ligula, sed gravida est. Donec nec interdum magna. Phasellus maximus ipsum non tellus euismod, id ornare quam porttitor. Maecenas interdum est nec vehicula rhoncus. Etiam efficitur nulla sit amet dolor feugiat rhoncus.</p>
-<h2>¿DÓNDE NOS PUEDES ENCONTRAR?</h2> 
-<div>
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2968.687521402599!2d-4.490210984557543!3d41.92107567921872!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd47aeaf83ff78a1%3A0x3756de50f54fe8c7!2sPanaderia%20Tina!5e0!3m2!1ses!2ses!4v1647419873270!5m2!1ses!2ses" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    <br><br><h2><span class="texto-con-fondo">¿DÓNDE NOS PUEDES ENCONTRAR?</span></h2>
+    <div class="mapa">
+    <iframe
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2968.687521402599!2d-4.490210984557543!3d41.92107567921872!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd47aeaf83ff78a1%3A0x3756de50f54fe8c7!2sPanaderia%20Tina!5e0!3m2!1ses!2ses!4v1647419873270!5m2!1ses!2ses"
+    ></iframe>
 </div> 
 
 <br><br><br><br><br>
-<h3>MISIÓN</h3>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mollis eu lectus vel scelerisque. Nullam nulla eros, mattis vel mauris at, ultricies pellentesque leo. Ut ut odio at purus varius ornare. Fusce condimentum et dui vel vulputate. Aliquam ac turpis id massa auctor sollicitudin. Etiam dignissim dolor eu lorem sollicitudin interdum. In faucibus nibh at nunc convallis, in interdum sapien consequat. Mauris tempor nec ante at fringilla. Aenean nec augue ac risus dictum suscipit et at nisi. Phasellus rutrum lectus felis, tempor pharetra nunc iaculis ac. Quisque neque ex, pellentesque eget purus at, faucibus laoreet arcu.</p>
-<H3>VISIÓN</H3>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mollis eu lectus vel scelerisque. Nullam nulla eros, mattis vel mauris at, ultricies pellentesque leo. Ut ut odio at purus varius ornare. Fusce condimentum et dui vel vulputate. Aliquam ac turpis id massa auctor sollicitudin. Etiam dignissim dolor eu lorem sollicitudin interdum. In faucibus nibh at nunc convallis, in interdum sapien consequat. Mauris tempor nec ante at fringilla. Aenean nec augue ac risus dictum suscipit et at nisi. Phasellus rutrum lectus felis, tempor pharetra nunc iaculis ac. Quisque neque ex, pellentesque eget purus at, faucibus laoreet arcu.</p>
-<H3>VALORES</H3>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mollis eu lectus vel scelerisque. Nullam nulla eros, mattis vel mauris at, ultricies pellentesque leo. Ut ut odio at purus varius ornare. Fusce condimentum et dui vel vulputate. Aliquam ac turpis id massa auctor sollicitudin. Etiam dignissim dolor eu lorem sollicitudin interdum. In faucibus nibh at nunc convallis, in interdum sapien consequat. Mauris tempor nec ante at fringilla. Aenean nec augue ac risus dictum suscipit et at nisi. Phasellus rutrum lectus felis, tempor pharetra nunc iaculis ac. Quisque neque ex, pellentesque eget purus at, faucibus laoreet arcu.</p>
+<div class="contenedor-total">
+  <div class="leyenda">
+    <h3>MISIÓN</h3>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mollis eu lectus vel scelerisque. Nullam nulla eros, mattis vel mauris at, ultricies pellentesque leo. Ut ut odio at purus varius ornare. Fusce condimentum et dui vel vulputate. Aliquam ac turpis id massa auctor sollicitudin. Etiam dignissim dolor eu lorem sollicitudin interdum. In faucibus nibh at nunc convallis, in interdum sapien consequat. Mauris tempor nec ante at fringilla. Aenean nec augue ac risus dictum suscipit et at nisi. Phasellus rutrum lectus felis, tempor pharetra nunc iaculis ac. Quisque neque ex, pellentesque eget purus at, faucibus laoreet arcu.</p>
+  </div>
+
+  <div class="leyenda">
+    <h3>VISIÓN</h3>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mollis eu lectus vel scelerisque. Nullam nulla eros, mattis vel mauris at, ultricies pellentesque leo. Ut ut odio at purus varius ornare. Fusce condimentum et dui vel vulputate. Aliquam ac turpis id massa auctor sollicitudin. Etiam dignissim dolor eu lorem sollicitudin interdum. In faucibus nibh at nunc convallis, in interdum sapien consequat. Mauris tempor nec ante at fringilla. Aenean nec augue ac risus dictum suscipit et at nisi. Phasellus rutrum lectus felis, tempor pharetra nunc iaculis ac. Quisque neque ex, pellentesque eget purus at, faucibus laoreet arcu.</p>
+  </div>
+
+  <div class="leyenda">
+    <h3>VALORES</h3>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mollis eu lectus vel scelerisque. Nullam nulla eros, mattis vel mauris at, ultricies pellentesque leo. Ut ut odio at purus varius ornare. Fusce condimentum et dui vel vulputate. Aliquam ac turpis id massa auctor sollicitudin. Etiam dignissim dolor eu lorem sollicitudin interdum. In faucibus nibh at nunc convallis, in interdum sapien consequat. Mauris tempor nec ante at fringilla. Aenean nec augue ac risus dictum suscipit et at nisi. Phasellus rutrum lectus felis, tempor pharetra nunc iaculis ac. Quisque neque ex, pellentesque eget purus at, faucibus laoreet arcu.</p>
+  </div>
+</div><br><br>
 </body>
  </html>

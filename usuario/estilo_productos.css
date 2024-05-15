@@ -1,0 +1,127 @@
+/*esto me sirve para que el header sea responsive */
+body{
+    font-family: 'roboto',sans-serif;
+    margin: 0;
+    background-color: #d49537 ;/* Cambia el color de fondo */
+}
+h1{
+    font-size: 4em;
+    color: rgb(255, 255, 0);
+}
+h2{
+    font-size: 2.3em;
+    text-align: center;
+}
+h3{
+    font-size:1.7em;
+} 
+p{
+    font-size: 1.3em;
+}
+ul{
+    list-style: none;
+}
+header {
+    background-color: rgb(225, 225, 225);
+    width: 100%;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0%;
+    z-index: 2;
+}
+header .logo {
+    margin: 0;
+    padding: 25px 30px;
+    font-weight: bold;
+    color: #edb45e;
+    font-size: 5em;
+}
+.container {
+    max-width: 1400px;
+    margin: auto;
+}
+header .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+header a {
+    text-decoration: none;
+    padding: 5px 12px;
+    font-weight: bold;
+    color: black;
+}
+header a:hover {
+    background-color: black;
+    color: white;
+    text-transform: uppercase;
+}
+nav li {
+    display: inline-flex;
+    margin-bottom: 10px;
+}
+/* hasta aqui el header es responsive*/
+
+/* Estilos para las tablas */
+table {
+    width: 80%; /* El ancho total es del 80% del contenedor */
+    margin: auto; /* Centrar la tabla horizontalmente */
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    padding: 10px;
+    border-bottom: 1px solid #ccc; /* Línea divisoria entre filas */
+    text-align: left; /* Alinear el contenido a la izquierda */
+}
+
+table th {
+    background-color: #f2f2f2; /* Color de fondo de las cabeceras */
+}
+
+/* Estilos para las celdas específicas */
+table td.nombre {
+    width: 20%; /* El nombre ocupa el 15% del ancho total */
+}
+
+table td.descripcion {
+    width: 50%; /* La descripción ocupa el 50% del ancho total */
+}
+
+table td.precio {
+    width: 5%; /* El precio ocupa el 5% del ancho total */
+}
+
+table .boton {
+    width: 100%; /* El botón ocupa el ancho completo de la celda */
+    padding: 8px; /* Agregar un poco de espacio interno al botón */
+    background-color: #4CAF50; /* Color de fondo */
+    color: white; /* Color del texto */
+    border: none; /* Eliminar el borde */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
+    transition: background-color 0.3s ease; /* Transición suave */
+}
+
+table .boton:hover {
+    background-color: #45a049; /* Cambio de color al pasar el mouse */
+}
+
+.boton {
+    width: 10%; /* El botón ocupa el ancho completo de la celda */
+    padding: 8px; /* Agregar un poco de espacio interno al botón */
+    background-color: #4CAF50; /* Color de fondo */
+    color: white; /* Color del texto */
+    border: none; /* Eliminar el borde */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
+    transition: background-color 0.3s ease; /* Transición suave */
+}
+
+.boton:hover {
+    background-color: #45a049; /* Cambio de color al pasar el mouse */
+}
+.formulario{
+    text-align: center;
+}

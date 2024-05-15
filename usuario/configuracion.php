@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>¡Bienvenidos!</title>
-    <link rel="stylesheet" href="style_configuracion.css">
+    <link rel="stylesheet" href="estilo_configuracion.css">
     <!-- Otros enlaces a archivos CSS -->
 </head>
 <body>
@@ -72,39 +72,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <li><a href="cerrarSesion_usuario.php"><img src="IMAGENES/cerrar-sesion.png" alt="cerrarSesion" width="30" height="30"></a></li>
          </nav>
      </div>
- </header>
-    <div class="container">
-      <br><br>
-      <div class="panel panel-info">
-        <div class="panel-heading text-center">Modificación de usuario</div>
+ </header><br><br>
+ <div class="container2">
+    <h2 class="text-center">Configuración de usuario</h2>
+    <div class="panel panel-info">
         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
             <div class="form-group"> 
-              <label>&nbsp;&nbsp;DNI:&nbsp;</label><input type="text" size="7" name="dni" value="<?php echo $_SESSION['usuario']['dni'] ?>" readonly>
+                <label>&nbsp;&nbsp;DNI:&nbsp;</label><input type="text" size="7" name="dni" value="<?php echo $_SESSION['usuario']['dni'] ?>" readonly>
             </div>
             <div class="form-group">
-            <label>&nbsp;&nbsp;PASS&nbsp;</label><input type="password" size="35" name="pass" value="<?php echo $_SESSION['usuario']['pass']; ?>">
+                <label>&nbsp;&nbsp;PASS&nbsp;</label><input type="password" size="30" name="pass" value="<?php echo $_SESSION['usuario']['pass']; ?>">
             </div>
             <div class="form-group">
-             <label>&nbsp;&nbsp;CORREO&nbsp;</label><input type="text" name="correo" size="20" value="<?php echo $_SESSION['usuario']['correo']; ?>">
+                <label>&nbsp;&nbsp;CORREO&nbsp;</label><input type="text" name="correo" size="20" value="<?php echo $_SESSION['usuario']['correo']; ?>">
             </div>
             <div class="form-group">
-             <label>&nbsp;&nbsp;NOMBRE&nbsp;</label><input type="text" name="nombre" size="20" value="<?php echo $_SESSION['usuario']['nombre']; ?>">
+                <label>&nbsp;&nbsp;NOMBRE&nbsp;</label><input type="text" name="nombre" size="20" value="<?php echo $_SESSION['usuario']['nombre']; ?>">
             </div>
             <div class="form-group">
-             <label>&nbsp;&nbsp;APELLIDO1&nbsp;</label><input type="text" name="apellido1" size="20" value="<?php echo $_SESSION['usuario']['apellido1']; ?>">
+                <label>&nbsp;&nbsp;APELLIDO1&nbsp;</label><input type="text" name="apellido1" size="20" value="<?php echo $_SESSION['usuario']['apellido1']; ?>">
             </div>
             <div class="form-group">
-             <label>&nbsp;&nbsp;APELLIDO2&nbsp;</label><input type="text" name="apellido2" size="20" value="<?php echo $_SESSION['usuario']['apellido2']; ?>">
+                <label>&nbsp;&nbsp;APELLIDO2&nbsp;</label><input type="text" name="apellido2" size="20" value="<?php echo $_SESSION['usuario']['apellido2']; ?>">
             </div>
             <div class="form-group">
-             <label>&nbsp;&nbsp;TELEFONO&nbsp;</label><input type="text" name="telefono" size="20" value="<?php echo $_SESSION['usuario']['telefono']; ?>">
+                <label>&nbsp;&nbsp;TELEFONO&nbsp;</label><input type="text" name="telefono" size="20" value="<?php echo $_SESSION['usuario']['telefono']; ?>">
             </div>
             <hr>
             &nbsp;&nbsp;<a href="index_usuario.php" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span>Cancelar</a>
             <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span>Aceptar</button><br><br>
-          </form>
-      </div>
+        </form>
     </div>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+</div>
+
     
  </html>

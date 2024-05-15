@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Perfil Administrador</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="estilos.css">
+    
 </head>
 <body>
     <div class="header">
@@ -53,8 +54,11 @@ $resultado = $conn->query($consulta);
     <title>Productos</title>
 </head>
 <body>
-
-
+<h2 class="title">Productos en la base de datos</h2>
+<div class="add-category-container">
+        <a href="agregar_producto.php" class="add-category-link">Añadir nuevo producto</a><br><br>
+    </div>
+    
 <table>
     <tr>
         <th>id_producto</th>
@@ -113,6 +117,6 @@ $resultado = $conn->query($consulta);
 // Cerrar conexión
 $conn->close();
 ?>
-<a href="agregar_producto.php">Añadir nuevo producto</a>
+
 </body>
 </html>

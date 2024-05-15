@@ -30,7 +30,7 @@
                 ?>
             </form>
             <p>¿No estás registrado? <a href="registro.php">Regístrate aquí</a>.</p><br>
-            <p>¿Has olvidado la contraseña?<a href="cambiarContrasena.php">Cambiar contraseña</a></p>
+            <!--<p>¿Has olvidado la contraseña?<a href="cambiarContrasena.php">Cambiar contraseña</a></p>-->
         </div>
     </div>
 </body>

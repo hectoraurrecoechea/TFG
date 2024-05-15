@@ -20,10 +20,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "INSERT INTO categorias (nombre, descripcion) VALUES ('$nombre', '$descripcion')";
 
     if ($conn->query($sql) === TRUE) {
-        echo "Categoría añadida correctamente.";
+        echo "<script>alert('Categoría añadida correctamente.');</script>";
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "<script>alert('Error: " . $sql . "\\n" . $conn->error . "');</script>";
     }
+    
 }
 ?>
 
@@ -33,19 +34,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar Nueva Categoría</title>
+    <link rel="stylesheet" href="estilosAnadir.css">
 </head>
 <body>
-    <h1>Agregar Nueva Categoría</h1>
-    <form method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
-        <label for="nombre">Nombre de la Categoría:</label><br>
-        <input type="text" id="nombre" name="nombre" required><br><br>
-        <label for="descripcion">Descripción de la Categoría:</label><br>
-        <textarea id="descripcion" name="descripcion" cols="50" rows="10" required></textarea><br><br>
-        <input type="submit" value="Añadir Categoría">
-    </form>
-    <a href="categorias_admin.php">Volver</a>
+    <div class="form-container">
+        <h1>Agregar Nueva Categoría</h1>
+        <form method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
+            <label for="nombre">Nombre de la Categoría:</label><br>
+            <input type="text" id="nombre" name="nombre" required><br><br>
+            <label for="descripcion">Descripción de la Categoría:</label><br>
+            <textarea id="descripcion" name="descripcion" cols="50" rows="10" required></textarea><br><br>
+            <input type="submit" value="Añadir Categoría">
+        </form>
+        <a href="categorias_admin.php">Volver</a>
+    </div>
 </body>
 </html>
+
 
 <?php
 // Cerrar la conexión

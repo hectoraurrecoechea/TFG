@@ -47,7 +47,7 @@ $dbname = "panaderia";
           
           $stmt = $obj_conexion->prepare($var_consulta);
 
-          echo "<h3>Prodcuto modificada</h3>";
+          echo "<h3>Producto modificado</h3>";
           $stmt->execute();
           $stmt->close();
 

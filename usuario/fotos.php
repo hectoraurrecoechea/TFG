@@ -19,7 +19,7 @@ if ($_SESSION['rol'] == 'administrador') {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>¡Bienvenidos!</title>
-    <link rel="stylesheet" href="style_historia.css">
+    <link rel="stylesheet" href="estilo_historia.css">
 </head>
 <body>
 <header>
