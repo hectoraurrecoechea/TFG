@@ -1,0 +1,280 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8;
+}
+
+h1 {
+    font-size: 4em;
+    color: #ffd700;
+    text-shadow: 2px 2px #000;
+}
+
+h2 {
+    font-size: 2.5em;
+    color: white;
+    margin-bottom: 20px;
+}
+
+h3 {
+    font-size: 1.7em;
+    color: #fff;
+}
+
+p {
+    font-size: 1.3em;
+    color: #fff;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+header {
+    background-color: #e1e1e1;
+    width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 3;
+}
+
+header .logo {
+    margin: 0;
+    padding: 25px 30px;
+    font-weight: bold;
+    color: #edb45e;
+    font-size: 5em;
+}
+
+.container {
+    max-width: 1400px;
+    margin: auto;
+}
+
+header .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header a {
+    text-decoration: none;
+    padding: 5px 12px;
+    font-weight: bold;
+    color: black;
+}
+
+header a:hover {
+    background-color: black;
+    color: white;
+    text-transform: uppercase;
+}
+
+nav li {
+    display: inline-flex;
+    margin-bottom: 10px;
+}
+
+
+.hidden {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+.visible {
+    opacity: 1;
+}
+.welcome-section {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+    text-align: center;
+    background-image: url('IMAGENES/fondo.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 2; /* Ajuste el z-index de la sección de bienvenida */
+}
+.welcome-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Capa de superposición oscura */
+    z-index: 1;
+}
+.welcome-section h1, .welcome-section p {
+    position: relative;
+    z-index: 2;
+    margin: 0;
+}
+.welcome-section h1 {
+    font-size: 70px;
+    color: #fff;
+    padding: 20px;
+    font-family: 'Pacifico', cursive; /* Utilizando la fuente Pacifico */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra de texto */
+}
+
+.welcome-section p {
+    font-size: 24px;
+    color: #fff;
+    padding: 10px;
+    font-family: 'Indie Flower', cursive; /* Utilizando la fuente Indie Flower */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Sombra de texto */
+}
+
+
+.offers-section {
+    background-color: #e74c3c;
+    text-align: center;
+    padding: 50px 0;
+}
+
+.offers-section h2 {
+    margin-top: 0;
+    font-size: 3em;
+    color: #fff;
+}
+
+.carousel {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+    overflow: hidden;
+}
+
+.carousel-item {
+    display: none;
+    width: 100%;
+    height: auto;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: auto;
+}
+
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2em;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.carousel-arrow:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.carousel-arrow-left {
+    left: 10px;
+}
+
+.carousel-arrow-right {
+    right: 10px;
+}
+
+.map-section {
+    text-align: center;
+}
+
+.map-section iframe {
+    width: 100%;
+    height: 500px;
+    border: 0;
+}
+
+footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #28292B;
+    color: white;
+    padding: 20px;
+}
+
+.contact-info,
+.logo,
+.follow-us {
+    flex-basis: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.social-icons a {
+    margin: 0 5px;
+}
+
+.social-icons img {
+    width: 30px;
+    height: 30px;
+}
+
+@media (min-width: 768px) {
+    .contact-info,
+    .logo,
+    .follow-us {
+        flex-basis: 30%;
+    }
+}
+
+
+
+
+
+.order-section {
+    text-align: center;
+    margin-bottom: 20px; /* Espacio entre el nuevo div y el mapa */
+    background-color: #28292B;
+    color: white;
+    padding: 100px;
+}
+
+.order-section p {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.order-section button {
+    background-color: teal;
+    color: white;
+    border: none;
+    border-radius: 25px; /* Hacer el botón redondo */
+    padding: 20px 40px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Transición de color al pasar el ratón */
+}
+
+.order-section button:hover {
+    background-color: #074441; /* Color un poco más oscuro al pasar el ratón */
+}
+
+/* Estilos para hacer el diseño responsive */
+@media screen and (max-width: 600px) {
+    .order-section p {
+        font-size: 1em;
+    }
+
+    .order-section button {
+        padding: 8px 16px;
+    }
+}

@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Registro de Cliente</title>
+    <link rel="stylesheet" href="styleRegistro.css">
 </head>
 <body>
-    <h2>Registro de Cliente</h2>
+    
     <form action="validar_registro.php" method="post">
+    <h2>Registro de Cliente</h2>
         <label for="dni">DNI:</label>
         <input type="text" name="dni" required><br>
 
@@ -32,7 +34,8 @@
         <input type="text" name="telefono" required><br>
 
         <input type="submit" value="Registrar">
+        <a href="index.php">Volver a inicio</a>
     </form><br>
-    <a href="index.php">Volver a inicio</a>
+    
 </body>
 </html>

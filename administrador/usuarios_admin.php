@@ -50,7 +50,7 @@
     }
 
     // Consulta SQL para obtener todos los usuarios
-    $sql = "SELECT * FROM clientes";
+    $sql = "SELECT * FROM clientes ORDER BY CASE WHEN rol = 'usuario' THEN 0 ELSE 1 END;";
     $result = $conn->query($sql);
     ?>
 
@@ -59,42 +59,38 @@
 
         <table>
             <tr>
+                <th></th>
+                <th></th>
+                <th></th>
                 <th>DNI</th>
-                <th>Pass</th>
-                <th>Correo</th>
                 <th>Nombre</th>
                 <th>Apellido1</th>
                 <th>Apellido2</th>
                 <th>Teléfono</th>
+                <th>Pass</th>
+                <th>Correo</th>
                 <th>Rol</th>
-                <th></th>
-                <th></th>
                 <!-- Agrega más columnas si es necesario -->
+                <th></th> <!-- Nueva columna para el enlace de Pedidos -->
             </tr>
             <?php
             // Iterar sobre los resultados y mostrar cada usuario en una fila de la tabla
             if ($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()) {
                     echo "<tr>";
-                    echo "<td>" . $row["dni"] . "</td>";
-                    echo "<td>" . $row["pass"] . "</td>";
-                    echo "<td>" . $row["correo"] . "</td>";
-                    echo "<td>" . $row["nombre"] . "</td>";
-                    echo "<td>" . $row["apellido1"] . "</td>";
-                    echo "<td>" . $row["apellido2"] . "</td>";
-                    echo "<td>" . $row["telefono"] . "</td>";
-                    echo "<td>" . $row["rol"] . "</td>";
+                    // Botón de Pedidos
+                    echo "<td><a href='pedidos_cliente.php?dni=" . $row["dni"] . "' class='btn btn-primary'><span class='glyphicon glyphicon-list-alt'></span> Pedidos</a></td>";
                     ?>
                     <!--BOTONES ELIMINAR Y MODIFICAR -->
                     <td>
                       <form method="get" action="modifica_usuario.php">
                         <input type='hidden' name='dni' value='<?php echo $row["dni"]?>'>
-                        <input type='hidden' name='pass' value='<?php echo $row["pass"]?>'>
-                        <input type='hidden' name='correo' value='<?php echo $row["correo"]?>'>
                         <input type='hidden' name='nombre' value='<?php echo $row["nombre"]?>'>
                         <input type='hidden' name='apellido1' value='<?php echo $row["apellido1"]?>'>
                         <input type='hidden' name='apellido2' value='<?php echo $row["apellido2"]?>'>
                         <input type='hidden' name='telefono' value='<?php echo $row["telefono"]?>'>
+                        <input type='hidden' name='pass' value='<?php echo $row["pass"]?>'>
+                        <input type='hidden' name='correo' value='<?php echo $row["correo"]?>'>
                         <button type="submit" class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span> Modificar</button>
                       </form>
                     </td>
@@ -105,6 +101,15 @@
                       </form>
                     </td>
                     <?php
+                    echo "<td>" . $row["dni"] . "</td>";
+                    echo "<td>" . $row["nombre"] . "</td>";
+                    echo "<td>" . $row["apellido1"] . "</td>";
+                    echo "<td>" . $row["apellido2"] . "</td>";
+                    echo "<td>" . $row["telefono"] . "</td>";
+                    echo "<td>" . $row["pass"] . "</td>";
+                    echo "<td>" . $row["correo"] . "</td>";
+                    echo "<td>" . $row["rol"] . "</td>";
+                    
                     echo "</tr>";
                 }
             } else {

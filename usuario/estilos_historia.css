@@ -1,0 +1,143 @@
+body{
+    font-family: 'roboto',sans-serif;
+    margin: 0;
+    background-color: #d49537 /* Cambia el color de fondo */
+}
+h1{
+    font-size: 4em;
+    color: rgb(255, 255, 0);
+    text-align: center;
+}
+h2{
+    font-size: 2.3em;
+    text-align: center;
+}
+h3{
+    font-size:1.7em;
+    text-align: center;
+    color: white;
+} 
+p{
+    font-size: 1.3em;
+}
+ul{
+    list-style: none;
+}
+header {
+    background-color: rgb(225, 225, 225);
+    width: 100%;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0%;
+    z-index: 2;
+}
+header .logo {
+    margin: 0;
+    padding: 25px 30px;
+    font-weight: bold;
+    color: #edb45e;
+    font-size: 5em;
+}
+.container {
+    max-width: 1400px;
+    margin: auto;
+}
+header .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+header a {
+    text-decoration: none;
+    padding: 5px 12px;
+    font-weight: bold;
+    color: black;
+}
+header a:hover {
+    background-color: black;
+    color: white;
+    text-transform: uppercase;
+}
+nav li {
+    display: inline-flex;
+    margin-bottom: 10px;
+}
+img{
+    margin-left: 35%;
+}
+
+
+.texto-con-fondo {
+    display: inline-block; /* Para que el ancho se ajuste al contenido */
+    background-color: black; /* Color de fondo */
+    color: white;
+    padding: 5px; /* Espacio alrededor del texto */
+  }
+
+  /*mapa*/
+  .mapa {
+    width: 50%; /* Ancho del contenedor */
+    margin: 0 auto; /* Centrar horizontalmente */
+    position: relative;
+    padding-bottom:  28.125%; /* Proporción 16:9 */
+    overflow: hidden;
+}
+
+/* Estilo para el iframe del mapa */
+.mapa iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; /* Ocupar todo el ancho del contenedor */
+    height: 100%; /* Ocupar todo el alto del contenedor */
+    border: 0;
+}
+
+.contenedor-total {
+    width: 40%; /* Ancho del contenedor total */
+    margin: 0 auto; /* Centrar horizontalmente */
+    border: 2px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+  }
+
+  footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #28292B;
+    color: white;
+    padding: 20px;
+}
+
+.contact-info,
+.logo,
+.follow-us {
+    flex-basis: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.social-icons a {
+    margin: 0 5px;
+}
+
+.social-icons img {
+    width: 30px;
+    height: 30px;
+}
+
+@media (min-width: 768px) {
+    .contact-info,
+    .logo,
+    .follow-us {
+        flex-basis: 30%;
+    }
+}

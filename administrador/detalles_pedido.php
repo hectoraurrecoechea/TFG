@@ -24,21 +24,19 @@ if ($conn->connect_error) {
 if(isset($_GET['id_pedido'])) {
     $id_pedido = $_GET['id_pedido'];
 
-    // Consulta SQL para obtener información del cliente
-    $cliente_query = "SELECT c.correo, c.nombre, c.apellido1, c.apellido2, c.telefono
-                      FROM clientes c
-                      INNER JOIN pedidos p ON c.dni = p.dni
-                      WHERE p.id_pedido = $id_pedido";
+    // Consulta SQL para obtener los detalles del pedido
+    $detalles_query = "SELECT pr.nombre, pr.descripcion, pr.precio, pp.cantidad
+                       FROM pedidos_productos pp
+                       INNER JOIN productos pr ON pp.id_producto = pr.id_producto
+                       WHERE pp.id_pedido = $id_pedido";
+    $detalles_result = $conn->query($detalles_query);
 
-    $cliente_result = $conn->query($cliente_query);
-
-    // Consulta SQL para obtener detalles del pedido
-    $pedido_query = "SELECT pr.nombre, pr.descripcion, pr.precio, pp.cantidad
-                     FROM pedidos_productos pp
-                     INNER JOIN productos pr ON pp.id_producto = pr.id_producto
-                     WHERE pp.id_pedido = $id_pedido";
-
-    $pedido_result = $conn->query($pedido_query);
+    // Obtener la fecha y el estado del pedido
+    $pedido_info_query = "SELECT fecha_pedido, estado_pedido FROM pedidos WHERE id_pedido = $id_pedido";
+    $pedido_info_result = $conn->query($pedido_info_query);
+    $pedido_info_row = $pedido_info_result->fetch_assoc();
+    $fecha_pedido = $pedido_info_row['fecha_pedido'];
+    $estado_pedido = $pedido_info_row['estado_pedido'];
 } else {
     echo "ID de pedido no especificado.";
     exit;
@@ -49,7 +47,7 @@ if(isset($_GET['id_pedido'])) {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Más Información del Pedido</title>
+    <title>Detalles del Pedido</title>
     <link rel="stylesheet" href="style.css">
     <style>
         table {
@@ -71,32 +69,13 @@ if(isset($_GET['id_pedido'])) {
         <h1>Detalles del Pedido</h1>
     </div>
     <div class="nav">
-        <a href="pedidos_admin.php">Volver a Pedidos</a>
+        <a href="usuarios_admin.php">Volver a Usuarios</a>
         <a href="cerrarSesion_admin.php">Cerrar sesión</a>
     </div>
 
-    <h2>Información del Cliente</h2>
-    <table>
-        <tr>
-            <th>Correo</th>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Teléfono</th>
-        </tr>
-        <?php
-        if ($cliente_result->num_rows > 0) {
-            $cliente_row = $cliente_result->fetch_assoc();
-            echo "<tr>
-                    <td>".$cliente_row["correo"]."</td>
-                    <td>".$cliente_row["nombre"]."</td>
-                    <td>".$cliente_row["apellido1"]." ".$cliente_row["apellido2"]."</td>
-                    <td>".$cliente_row["telefono"]."</td>
-                </tr>";
-        } else {
-            echo "<tr><td colspan='4'>No se encontraron resultados.</td></tr>";
-        }
-        ?>
-    </table>
+    <h2>Información del Pedido</h2>
+    <p>Fecha del Pedido: <?php echo $fecha_pedido; ?></p>
+    <p>Estado del Pedido: <?php echo $estado_pedido; ?></p>
 
     <h2>Detalles del Pedido</h2>
     <table>
@@ -109,12 +88,12 @@ if(isset($_GET['id_pedido'])) {
         </tr>
         <?php
         $total_pedido = 0;
-        if ($pedido_result->num_rows > 0) {
-            while ($pedido_row = $pedido_result->fetch_assoc()) {
-                $nombre_producto = $pedido_row["nombre"];
-                $descripcion_producto = $pedido_row["descripcion"];
-                $precio_unitario = $pedido_row["precio"];
-                $cantidad = $pedido_row["cantidad"];
+        if ($detalles_result->num_rows > 0) {
+            while ($detalles_row = $detalles_result->fetch_assoc()) {
+                $nombre_producto = $detalles_row["nombre"];
+                $descripcion_producto = $detalles_row["descripcion"];
+                $precio_unitario = $detalles_row["precio"];
+                $cantidad = $detalles_row["cantidad"];
                 $total_producto = $precio_unitario * $cantidad;
                 $total_pedido += $total_producto;
 
@@ -127,7 +106,7 @@ if(isset($_GET['id_pedido'])) {
                       </tr>";
             }
         } else {
-            echo "<tr><td colspan='5'>No se encontraron resultados.</td></tr>";
+            echo "<tr><td colspan='5'>No se encontraron detalles para este pedido.</td></tr>";
         }
         ?>
         <tr>

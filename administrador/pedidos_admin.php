@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Perfil Administrador</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="estilos.css">
     <style>
         table {
             width: 100%;
@@ -27,7 +27,9 @@
         .verde {
             background-color: green;
         }
-
+        h1{
+            text-align:center;
+        }
     </style>
 </head>
 <body>
@@ -42,6 +44,20 @@
         <a href="cerrarSesion_admin.php">Cerrar sesión</a>
     </div>
     <h1>Listado de Pedidos</h1>
+
+    <!-- Agrega el desplegable de filtrado -->
+    <div style="text-align: center; margin-bottom: 20px;">
+    <form action="pedidos_admin.php" method="POST" style="display: inline-block; padding: 10px; background-color: #f2f2f2; border-radius: 5px;">
+        <select name="filtro_estado" style="padding: 5px;">
+            <option value="todas" <?php if(isset($_POST['filtro_estado']) && $_POST['filtro_estado'] == 'todas') echo 'selected'; ?>>Todas</option>
+            <option value="no_realizado" <?php if(isset($_POST['filtro_estado']) && $_POST['filtro_estado'] == 'no_realizado') echo 'selected'; ?>>No realizado</option>
+            <option value="en_proceso" <?php if(isset($_POST['filtro_estado']) && $_POST['filtro_estado'] == 'en_proceso') echo 'selected'; ?>>En proceso</option>
+            <option value="finalizado" <?php if(isset($_POST['filtro_estado']) && $_POST['filtro_estado'] == 'finalizado') echo 'selected'; ?>>Finalizado</option>
+        </select>
+        <input type="submit" value="Filtrar" style="padding: 5px;">
+    </form>
+</div>
+
     <table>
         <tr>
             <th>ID Pedido</th>
@@ -68,8 +84,25 @@
             die("Conexión fallida: " . $conn->connect_error);
         }
 
-        // Consulta SQL para obtener los datos
-        $sql = "SELECT id_pedido, fecha_pedido, estado_pedido FROM pedidos";
+        // Consulta SQL para obtener los datos con filtro opcional
+        $filtro = "";
+        if (isset($_POST['filtro_estado'])) {
+            switch ($_POST['filtro_estado']) {
+                case 'no_realizado':
+                    $filtro = " WHERE estado_pedido = 0";
+                    break;
+                case 'en_proceso':
+                    $filtro = " WHERE estado_pedido = 1";
+                    break;
+                case 'finalizado':
+                    $filtro = " WHERE estado_pedido = 2";
+                    break;
+                default:
+                    // Para el filtro "Todas", no necesitamos agregar ninguna condición
+                    break;
+            }
+        }
+        $sql = "SELECT id_pedido, fecha_pedido, estado_pedido FROM pedidos" . $filtro . " ORDER BY id_pedido desc";
 
         $result = $conn->query($sql);
 

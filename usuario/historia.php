@@ -19,7 +19,7 @@ if ($_SESSION['rol'] == 'administrador') {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>¡Bienvenidos!</title>
-    <link rel="stylesheet" href="estilo_historia.css">
+    <link rel="stylesheet" href="estilos_historia.css">
 </head>
 <body>
 <header>
@@ -39,7 +39,7 @@ if ($_SESSION['rol'] == 'administrador') {
      </div>
  </header>
  <H1>NUESTRA HISTORIA</H1>
- <img src="https://scontent-mad2-1.xx.fbcdn.net/v/t39.30808-6/299716935_525305212725457_6338718836353774532_n.jpg?stp=dst-jpg_s960x960&_nc_cat=108&ccb=1-7&_nc_sid=5f2048&_nc_ohc=qOC8nUfLs68Ab5-HzFd&_nc_ht=scontent-mad2-1.xx&oh=00_AfDkI8xix4ekR-gv0ZYsaRvKPSWlUTudbsdlbWL-BCsUwA&oe=66354FD1" width="30%" height="30%">
+ <img src="IMAGENES/panaderia.jpg" width="30%" height="30%">
  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sem dui, condimentum aliquam accumsan eget, interdum non urna. Nam at enim mauris. Nunc egestas felis et ipsum ultrices, ac iaculis odio consequat. Vivamus a metus lorem. Donec tincidunt, ipsum ut efficitur tristique, dolor ex tempus dui, pulvinar malesuada dui dui vitae libero. Duis in mattis diam, ac tincidunt tellus. In hac habitasse platea dictumst. Sed libero orci, rutrum eget lacinia eget, commodo quis risus. Mauris vitae sapien aliquam, laoreet sapien ut, dignissim dolor. Vestibulum condimentum, augue id venenatis imperdiet, tellus quam cursus lorem, suscipit rhoncus diam purus quis ex. Fusce viverra, felis ac consectetur ultricies, sem libero tincidunt felis, eget efficitur diam leo at sapien. Fusce eu efficitur enim. Duis posuere mi sed suscipit cursus. Maecenas semper, ligula vel fringilla hendrerit, tortor mi sollicitudin eros, sed elementum dolor nulla at metus. Integer tincidunt dignissim diam, sed sodales mauris fringilla feugiat. <br> <br><br>
 
     Etiam nibh augue, sollicitudin dignissim posuere et, porttitor in tellus. Proin dapibus odio nec eleifend posuere. Suspendisse id erat venenatis, consequat purus quis, cursus massa. Cras consectetur nisi non massa congue mollis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam lorem enim, consectetur eget odio eget, facilisis facilisis purus. Maecenas sit amet ultricies lectus, nec facilisis magna. Integer aliquet rutrum risus, quis pretium eros gravida non. <br><br><br>
@@ -70,4 +70,24 @@ if ($_SESSION['rol'] == 'administrador') {
   </div>
 </div><br><br>
 </body>
+<footer>
+    <div class="contact-info">
+        <h3>Contacto</h3>
+        <p>Teléfono: 607 92 28 80</p>
+        <p>Dirección: Ctra. Baños, 13, 34200 Venta de Baños, Palencia</p>
+        <p>Correo: pantina@gmail.com</p>
+        <p>Facebook: <a href="https://m.facebook.com/Panader%C3%ADa-Tina-118683468689693/">PANADERIA TINA</a></p>
+    </div>
+    <div class="logo">
+        <img src="IMAGENES/logo.jpg" alt="Logo" style="width: 200px; height: auto;">
+    </div>
+    <div class="follow-us">
+        <h3>Síguenos</h3>
+        <div class="social-icons">
+            <a href="https://m.facebook.com/Panader%C3%ADa-Tina-118683468689693/" target="_blank"><img src="IMAGENES/facebook.png" alt="Facebook"></a>
+            <a href="https://www.twitter.com/ejemplo" target="_blank"><img src="IMAGENES/twiter.png" alt="Twitter"></a>
+            <a href="https://www.instagram.com/ejemplo" target="_blank"><img src="IMAGENES/instagram.png" alt="Instagram"></a>
+        </div>
+    </div>
+</footer>
  </html>

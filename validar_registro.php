@@ -66,7 +66,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt_insert->bind_param("sssssss", $dni, $correo, $pass_hasheada, $nombre, $apellido1, $apellido2, $telefono);
         
         if ($stmt_insert->execute()) {
-            echo "El usuario se ha registrado correctamente.";
+            //echo "El usuario se ha registrado correctamente.";
+            header("location:index.php");
             ?>
             <a href="index.php">Volver a inicio</a>
             <?php

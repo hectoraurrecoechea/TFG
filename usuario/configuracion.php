@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>¡Bienvenidos!</title>
-    <link rel="stylesheet" href="estilo_configuracion.css">
+    <link rel="stylesheet" href="estilos_configuracion.css">
     <!-- Otros enlaces a archivos CSS -->
 </head>
 <body>
@@ -104,6 +104,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
     </div>
 </div>
+<br><br>
 
-    
+</body>
+<footer>
+    <div class="contact-info">
+        <h3>Contacto</h3>
+        <p>Teléfono: 607 92 28 80</p>
+        <p>Dirección: Ctra. Baños, 13, 34200 Venta de Baños, Palencia</p>
+        <p>Correo: pantina@gmail.com</p>
+        <p>Facebook: <a href="https://m.facebook.com/Panader%C3%ADa-Tina-118683468689693/">PANADERIA TINA</a></p>
+    </div>
+    <div class="logo">
+        <img src="IMAGENES/logo.jpg" alt="Logo" style="width: 200px; height: auto;">
+    </div>
+    <div class="follow-us">
+        <h3>Síguenos</h3>
+        <div class="social-icons">
+            <a href="https://m.facebook.com/Panader%C3%ADa-Tina-118683468689693/" target="_blank"><img src="IMAGENES/facebook.png" alt="Facebook"></a>
+            <a href="https://www.twitter.com/ejemplo" target="_blank"><img src="IMAGENES/twiter.png" alt="Twitter"></a>
+            <a href="https://www.instagram.com/ejemplo" target="_blank"><img src="IMAGENES/instagram.png" alt="Instagram"></a>
+        </div>
+    </div>
+</footer>
  </html>

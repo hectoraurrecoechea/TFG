@@ -5,7 +5,7 @@ body{
 }
 h1{
     font-size: 4em;
-    color: rgb(255, 255, 0);
+    color: #d49537;
 }
 h2{
     font-size: 2.3em;
@@ -100,4 +100,93 @@ nav li {
     border: 1px solid black;
     padding: 8px;
     text-align: center;
+}
+
+.schedule-table {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.schedule-table table {
+    width: 80%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd; /* Añadimos un borde general a la tabla */
+}
+
+.schedule-table th, .schedule-table td {
+    padding: 12px 15px;
+    text-align: center;
+    border: 1px solid #ddd; /* Aseguramos que todas las celdas tengan el mismo borde */
+}
+
+.schedule-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.schedule-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.schedule-table h1 {
+    margin: 0;
+    font-size: 24px;
+    text-align: center;
+}
+
+.schedule-table tr:first-child th, .schedule-table tr:first-child td {
+    border-top: none;
+}
+
+.schedule-table tr:last-child th, .schedule-table tr:last-child td {
+    border-bottom: none;
+}
+
+
+footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #28292B;
+    color: white;
+    padding: 20px;
+}
+
+.contact-info,
+.logo,
+.follow-us {
+    flex-basis: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.social-icons a {
+    margin: 0 5px;
+}
+
+.social-icons img {
+    width: 30px;
+    height: 30px;
+}
+
+@media (min-width: 768px) {
+    .contact-info,
+    .logo,
+    .follow-us {
+        flex-basis: 30%;
+    }
 }
