@@ -4,6 +4,20 @@
     <meta charset="UTF-8">
     <title>Perfil Administrador</title>
     <link rel="stylesheet" href="estilos.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function eliminarCategoria(id_categoria) {
+            if (confirm("¿Estás seguro de que deseas eliminar esta categoría?")) {
+                $.post("eliminar_categoria.php", { id_categoria: id_categoria }, function(response) {
+                    let res = JSON.parse(response);
+                    alert(res.message);
+                    if (res.success) {
+                        location.reload();
+                    }
+                });
+            }
+        }
+    </script>
 </head>
 <body>
     <div class="header">
@@ -22,9 +36,8 @@
     if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         header("location: ../index.php");
         exit;
-        //AÑADIR TIEMPO DE SESION PARA INICIAR Y ACABAR LA SESION
     }
-    // Conexión a la base de datos
+
     $servername = "localhost";
     $username = "root";
     $password = "12345";
@@ -32,16 +45,15 @@
 
     $conn = new mysqli($servername, $username, $password, $dbname);
 
-    // Verificar conexión
     if ($conn->connect_error) {
         die("Error de conexión: " . $conn->connect_error);
     }
 
-    // Consulta SQL para obtener todos los usuarios
     $sql = "SELECT * FROM categorias";
     $result = $conn->query($sql);
     ?>
-    <h2 class="title">Categorias en la base de datos</h2>
+
+    <h2 class="title">Categorías en la base de datos</h2>
     <div class="add-category-container">
         <a href="agregar_categoria.php" class="add-category-link">Añadir nueva categoría</a><br><br>
     </div>
@@ -50,13 +62,11 @@
         <tr>
             <th>id_categoria</th>
             <th>Nombre</th>
-            <th>Descripcion</th>
+            <th>Descripción</th>
             <th></th>
             <th></th>
-            <!-- Agrega más columnas si es necesario -->
         </tr>
         <?php
-        // Iterar sobre los resultados y mostrar cada usuario en una fila de la tabla
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
                 echo "<tr>";
@@ -64,7 +74,6 @@
                 echo "<td>" . $row["nombre"] . "</td>";
                 echo "<td>" . $row["descripcion"] . "</td>";
         ?>
-        <!--BOTONES ELIMINAR Y MODIFICAR -->
                 <td>
                     <form method="get" action="modifica_categoria.php">
                         <input type='hidden' name='id_categoria' value='<?php echo $row["id_categoria"]?>'>
@@ -74,26 +83,19 @@
                     </form>
                 </td>
                 <td>
-                    <form method="post" action="eliminar_categoria.php">
-                        <input type='hidden' name='id_categoria' value='<?php echo $row["id_categoria"]?>'>
-                        <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Eliminar</button>
-                    </form>
+                    <button type="button" class="btn btn-danger" onclick="eliminarCategoria('<?php echo $row["id_categoria"]?>')"><span class="glyphicon glyphicon-remove"></span> Eliminar</button>
                 </td>
         <?php
                 echo "</tr>";
             }
         } else {
-            echo "<tr><td colspan='5'>No hay usuarios</td></tr>";
+            echo "<tr><td colspan='5'>No hay categorías</td></tr>";
         }
         ?>
     </table>
 
     <?php
-    // Cerrar conexión
     $conn->close();
     ?>
-
-    
-
 </body>
 </html>

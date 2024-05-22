@@ -23,7 +23,6 @@
    $row["nombre_producto"]=$_GET["nombre_producto"];
    $row["descripcion"]=$_GET["descripcion"];
    $row["precio"]=$_GET["precio"];
-   $row["id_categoria"]=$_GET["id_categoria"];
   ?>
     <div class="container">
       <br><br>
@@ -41,9 +40,6 @@
             </div>
             <div class="form-group">
              <label>&nbsp;&nbsp;Precio&nbsp;</label><input type="text" name="precio" size="15" value="<?php echo $row["precio"]; ?>">
-            </div>
-            <div class="form-group"> 
-              <label>&nbsp;&nbsp;id_categoria:&nbsp;</label><input type="text" size="7" name="id_categoria" value="<?php echo $row["id_categoria"] ?>">
             </div>
             
             <hr>

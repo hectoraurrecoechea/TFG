@@ -39,7 +39,7 @@ h1{
 }
 
 .form-group input {
-    width: 100%;
+    width: 92%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -53,9 +53,10 @@ button {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    width: 100%;
     font-size: 16px;
+    width: calc(100% - 22px); /* Ancho igual al 100% menos el padding horizontal de los inputs */
 }
+
 
 button:hover {
     background-color: #45a049;

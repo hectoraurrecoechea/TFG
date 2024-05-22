@@ -7,63 +7,55 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
 // Verificar si el usuario ha iniciado sesión
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-    // Verificar si ya hay productos en el carrito
-    //if (!isset($_SESSION['carrito'])) {
-        
-        // Establecer la conexión a la base de datos (debes completar los datos de conexión)
-        $conexion = new mysqli("localhost", "root", "12345", "panaderia");
-        if ($conexion->connect_error) {
-            die("Error de conexión: " . $conexion->connect_error);
-        }
+    // Establecer la conexión a la base de datos
+    $conexion = new mysqli("localhost", "root", "12345", "panaderia");
+    if ($conexion->connect_error) {
+        die("Error de conexión: " . $conexion->connect_error);
+    }
 
-        // Obtener el DNI del usuario
-        $dni_usuario = $_SESSION['dni'];
+    // Obtener el DNI del usuario
+    $dni_usuario = $_SESSION['dni'];
 
-        // Obtener productos del carrito del usuario de la base de datos
-        $sql_carrito_usuario = "SELECT * FROM carrito WHERE dni = '$dni_usuario'";
-        $resultado_carrito = $conexion->query($sql_carrito_usuario);
-        if ($resultado_carrito->num_rows > 0) {
-            // Inicializar el arreglo de carrito en la sesión
-            $_SESSION['carrito'] = array();
-            $_SESSION['carrito_ids'] = array(); // Nuevo arreglo para almacenar IDs de carrito
+    // Obtener productos del carrito del usuario de la base de datos
+    $sql_carrito_usuario = "SELECT * FROM carrito WHERE dni = '$dni_usuario'";
+    $resultado_carrito = $conexion->query($sql_carrito_usuario);
+    if ($resultado_carrito->num_rows > 0) {
+        // Inicializar el arreglo de carrito en la sesión
+        $_SESSION['carrito'] = array();
+        $_SESSION['carrito_ids'] = array(); // Nuevo arreglo para almacenar IDs de carrito
 
-            // Recorrer los resultados y almacenarlos en la sesión
-            while ($row = $resultado_carrito->fetch_assoc()) {
-                $id_carrito = $row['id_carrito']; // Obtener el ID de carrito
-                $id_producto = $row['id_producto'];
-                $cantidad = $row['cantidad'];
+        // Recorrer los resultados y almacenarlos en la sesión
+        while ($row = $resultado_carrito->fetch_assoc()) {
+            $id_carrito = $row['id_carrito']; // Obtener el ID de carrito
+            $id_producto = $row['id_producto'];
+            $cantidad = $row['cantidad'];
 
-                // Almacenar el ID de carrito en la sesión
-                $_SESSION['carrito_ids'][] = $id_carrito; // Cambio aquí
+            // Almacenar el ID de carrito en la sesión
+            $_SESSION['carrito_ids'][] = $id_carrito;
 
-                // Obtener información del producto desde la base de datos
-                $sql_info_producto = "SELECT * FROM productos WHERE id_producto = '$id_producto'";
-                $resultado_info_producto = $conexion->query($sql_info_producto);
-                if ($resultado_info_producto->num_rows > 0) {
-                    $info_producto = $resultado_info_producto->fetch_assoc();
-                    // Almacenar información del producto en el carrito de la sesión
-                    $_SESSION['carrito'][$id_producto] = array(
-                        'id_producto' => $id_producto,
-                        'nombre' => $info_producto['nombre'],
-                        'descripcion' => $info_producto['descripcion'],
-                        'precio' => $info_producto['precio'],
-                        'cantidad' => $cantidad
-                    );
-                }
+            // Obtener información del producto desde la base de datos
+            $sql_info_producto = "SELECT * FROM productos WHERE id_producto = '$id_producto'";
+            $resultado_info_producto = $conexion->query($sql_info_producto);
+            if ($resultado_info_producto->num_rows > 0) {
+                $info_producto = $resultado_info_producto->fetch_assoc();
+                // Almacenar información del producto en el carrito de la sesión
+                $_SESSION['carrito'][$id_producto] = array(
+                    'id_producto' => $id_producto,
+                    'nombre' => $info_producto['nombre'],
+                    'descripcion' => $info_producto['descripcion'],
+                    'precio' => $info_producto['precio'],
+                    'cantidad' => $cantidad
+                );
             }
         }
-
-        // Cerrar la conexión a la base de datos
-        $conexion->close();
-    } else{
-        
     }
-//}
+
+    // Cerrar la conexión a la base de datos
+    $conexion->close();
+}
 
 if ($_SESSION['rol'] == 'administrador') {
     echo "Bienvenido, Administrador!";
-} else {
-    //echo "Bienvenido, Usuario!";
 }
 ?>
 
@@ -75,23 +67,6 @@ if ($_SESSION['rol'] == 'administrador') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>¡Bienvenidos!</title>
     <link rel="stylesheet" href="estilos_carrito.css">
-    <!--<style>
-       table {
-           width: 80%;
-           margin: 0 auto;
-           border-collapse: collapse; 
-       }
-
-       th, td {
-           padding: 8px;
-           text-align: left;
-           border-bottom: 1px solid #ddd;
-       }
-
-       th {
-           background-color: #f2f2f2;
-       }
-    </style>-->
 </head>
 <body>
 
@@ -203,29 +178,26 @@ function finalizarPedido($dni_usuario){
     }
     
     $fecha_pedido = date("Y-m-d H:i:s");
-        $sql_finalizar = "INSERT INTO `pedidos` (`id_pedido`, `estado_pedido`, `dni`, `fecha_pedido`) VALUES (NULL, '0', '$dni_usuario', '$fecha_pedido'); ";
-        $conexion->query($sql_finalizar);
+    $sql_finalizar = "INSERT INTO `pedidos` (`id_pedido`, `estado_pedido`, `dni`, `fecha_pedido`) VALUES (NULL, '0', '$dni_usuario', '$fecha_pedido');";
+    $conexion->query($sql_finalizar);
 
-        $sql_consulta = "SELECT id_pedido FROM pedidos WHERE dni = '$dni_usuario' AND fecha_pedido = '$fecha_pedido'";
-        $result_consulta = $conexion->query($sql_consulta); //EEJCUTAR LA CONSULTA ANTERIOR JEJEJE
-        
-        $row = $result_consulta->fetch_assoc();
-        $id_pedido = $row['id_pedido'];
-        
-        foreach ($_SESSION['carrito'] as $id_producto => $producto) {
-            $sql_insertar = "INSERT INTO `pedidos_productos`(`id_pedido`, `id_producto`, `cantidad`) VALUES ('$id_pedido',".$producto['id_producto'].",".$producto['cantidad'].")";
-            if ($conexion->query($sql_insertar)){
-                echo "insertado correctamente";
-            }
-
-        }
+    $sql_consulta = "SELECT id_pedido FROM pedidos WHERE dni = '$dni_usuario' AND fecha_pedido = '$fecha_pedido'";
+    $result_consulta = $conexion->query($sql_consulta);
+    
+    $row = $result_consulta->fetch_assoc();
+    $id_pedido = $row['id_pedido'];
+    
+    foreach ($_SESSION['carrito'] as $id_producto => $producto) {
+        $sql_insertar = "INSERT INTO `pedidos_productos`(`id_pedido`, `id_producto`, `cantidad`) VALUES ('$id_pedido',".$producto['id_producto'].",".$producto['cantidad'].")";
+        $conexion->query($sql_insertar);
+    }
+    header("Location: confirmacion.php");
 
     // Eliminar los productos del carrito del usuario
     $sql_eliminar = "DELETE FROM carrito WHERE dni = '$dni_usuario'";
     $conexion->query($sql_eliminar);
     $conexion->close();
     unset($_SESSION['carrito']);
-    header("Location: carrito.php");
     exit();
 }
 ?>
@@ -274,10 +246,10 @@ if (!empty($_SESSION['carrito'])) {
             <button type='submit' name='eliminar' class='boton2'>Borrar</button>  
         </form>
       </td>";
-echo "</tr>";
-}
-echo "</table>";
-echo "<div class='container-central'>";
+        echo "</tr>";
+    }
+    echo "</table>";
+    echo "<div class='container-central'>";
     // Mostrar la suma total
     echo "<p class='total'>Total: $total_suma €</p>";
     // Botón para vaciar el carrito con las nuevas cantidades
@@ -287,9 +259,8 @@ echo "<div class='container-central'>";
     // Botón para finalizar el pedido
     echo "<input type='hidden' name='dni_usuario' value='".$_SESSION['dni']."'>";
     echo "<button type='submit' name='finalizarPedido' class='boton'>Finalizar pedido</button>";
-echo "</div>";
-echo "</form>";
-
+    echo "</div>";
+    echo "</form>";
 
     // Procesar la actualización del carrito si se envió el formulario
     if(isset($_POST['vaciarCarrito'])) {
@@ -308,12 +279,11 @@ echo "</form>";
         finalizarPedido($_POST['dni_usuario']);
     }
     
-
 } else {
     echo "<p class='noProductos'>No hay productos en el carrito.</p>";
 }
 ?>
-</body> 
+</body>
 <footer>
     <div class="contact-info">
         <h3>Contacto</h3>

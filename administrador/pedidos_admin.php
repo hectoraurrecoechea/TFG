@@ -53,24 +53,29 @@
             <option value="no_realizado" <?php if(isset($_POST['filtro_estado']) && $_POST['filtro_estado'] == 'no_realizado') echo 'selected'; ?>>No realizado</option>
             <option value="en_proceso" <?php if(isset($_POST['filtro_estado']) && $_POST['filtro_estado'] == 'en_proceso') echo 'selected'; ?>>En proceso</option>
             <option value="finalizado" <?php if(isset($_POST['filtro_estado']) && $_POST['filtro_estado'] == 'finalizado') echo 'selected'; ?>>Finalizado</option>
+            <option value="ultimo_dia" <?php if(isset($_POST['filtro_estado']) && $_POST['filtro_estado'] == 'ultimo_dia') echo 'selected'; ?>>Último día</option>
+            <option value="ultima_semana" <?php if(isset($_POST['filtro_estado']) && $_POST['filtro_estado'] == 'ultima_semana') echo 'selected'; ?>>Última semana</option>
         </select>
         <input type="submit" value="Filtrar" style="padding: 5px;">
     </form>
 </div>
+
+
 
     <table>
         <tr>
             <th>ID Pedido</th>
             <th>Fecha del Pedido</th>
             <th>Estado del Pedido</th>
+            <th>Acciones</th>
         </tr>
         <?php
         session_start();
         if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
             header("location: ../index.php");
             exit;
-            //AÑADIR TIEMPO DE SESION PARA INICIAR Y ACABAR LA SESION
         }
+
         // Conexión a la base de datos
         $servername = "localhost";
         $username = "root";
@@ -97,12 +102,39 @@
                 case 'finalizado':
                     $filtro = " WHERE estado_pedido = 2";
                     break;
+                case 'ultima_semana':
+                    $fecha_hoy = date('Y-m-d H:i:s');
+                    $fecha_ultima_semana = date('Y-m-d H:i:s', strtotime('-1 week'));
+                    $filtro = " WHERE fecha_pedido BETWEEN '$fecha_ultima_semana' AND '$fecha_hoy'";
+                    break;
+                case 'ultimo_dia':
+                    $fecha_actual = date('Y-m-d H:i:s');
+                    $fecha_ultimas_24_horas = date('Y-m-d H:i:s', strtotime('-24 hours'));
+                    $filtro = " WHERE fecha_pedido BETWEEN '$fecha_ultimas_24_horas' AND '$fecha_actual'";
+                    break;
                 default:
                     // Para el filtro "Todas", no necesitamos agregar ninguna condición
                     break;
             }
         }
+        
         $sql = "SELECT id_pedido, fecha_pedido, estado_pedido FROM pedidos" . $filtro . " ORDER BY id_pedido desc";
+        
+        
+        
+
+        if (isset($_POST['ultima_semana']) && $_POST['ultima_semana'] == '1') {
+            $fecha_hoy = date('Y-m-d');
+            $fecha_ultima_semana = date('Y-m-d', strtotime('-1 week'));
+
+            if ($filtro) {
+                $filtro .= " AND fecha_pedido BETWEEN '$fecha_ultima_semana' AND '$fecha_hoy'";
+            } else {
+                $filtro = " WHERE fecha_pedido BETWEEN '$fecha_ultima_semana' AND '$fecha_hoy'";
+            }
+        }
+
+        $sql = "SELECT id_pedido, fecha_pedido, estado_pedido FROM pedidos" . $filtro . " ORDER BY id_pedido DESC";
 
         $result = $conn->query($sql);
 
@@ -138,13 +170,11 @@
                                 <input type='submit' value='Actualizar'>
                             </form>
                         </td>
-
                         <td><a href='mas_informacion.php?id_pedido=".$row["id_pedido"]."'>Más</a></td>
                       </tr>";
             }
-            
         } else {
-            echo "<tr><td colspan='3'>No se encontraron resultados.</td></tr>";
+            echo "<tr><td colspan='4'>No se encontraron resultados.</td></tr>";
         }
         $conn->close();
         ?>

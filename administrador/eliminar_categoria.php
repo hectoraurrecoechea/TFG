@@ -1,5 +1,10 @@
 <?php
-// Conexión a la base de datos
+session_start();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    echo json_encode(['success' => false, 'message' => 'No hay sesión iniciada.']);
+    exit;
+}
+
 $servername = "localhost";
 $username = "root";
 $password = "12345";
@@ -7,25 +12,23 @@ $dbname = "panaderia";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Verificar conexión
 if ($conn->connect_error) {
-    die("Error de conexión: " . $conn->connect_error);
+    echo json_encode(['success' => false, 'message' => 'Error de conexión.']);
+    exit;
 }
 
-// Recibir el DNI del usuario a eliminar
 $id_categoria = $_POST['id_categoria'];
 
-// Consulta SQL para eliminar el usuario
-$sql = "DELETE FROM categorias WHERE id_categoria='$id_categoria'";
+$sql = "DELETE FROM categorias WHERE id_categoria = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $id_categoria);
 
-if ($conn->query($sql) === TRUE) {
-    // Redirigir a la página de confirmación
-    header("Location: categoria_eliminada.php");
-    exit();
+if ($stmt->execute()) {
+    echo json_encode(['success' => true, 'message' => 'Categoría eliminada correctamente.']);
 } else {
-    echo "Error al eliminar usuario: " . $conn->error;
+    echo json_encode(['success' => false, 'message' => 'Error al eliminar la categoría.']);
 }
 
-// Cerrar conexión
+$stmt->close();
 $conn->close();
 ?>

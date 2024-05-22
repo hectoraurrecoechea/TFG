@@ -17,13 +17,16 @@ h2 {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.formulario {
+    max-width: 400px;
+}
+
 form {
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 40px;
     text-align: center;
-    max-width: 400px;
 }
 
 form h2 {
@@ -32,14 +35,13 @@ form h2 {
 
 .form-group {
     display: flex;
-    flex-direction: row;
     align-items: center;
     margin-bottom: 20px;
 }
 
 label {
     flex: 1;
-    text-align: right; /* Alineamos el texto a la derecha */
+    text-align: left; /* Alineamos el texto a la izquierda */
     font-weight: bold;
     margin-right: 10px;
 }
@@ -47,13 +49,11 @@ label {
 input[type="text"],
 input[type="email"],
 input[type="password"] {
-    flex: 1; /* Cambiamos el flex a 1 para que los inputs ocupen el espacio restante */
-    width: auto; /* Quitamos el ancho para que el input tome su ancho natural */
+    flex: 2; /* Ajustamos el ancho del input */
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
-
 
 input[type="submit"] {
     background-color: #4CAF50;

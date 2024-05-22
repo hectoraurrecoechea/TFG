@@ -45,6 +45,7 @@
       </div>
       <div class="text-center">&copy; Centro Don Bosco</div>
     </div>
+    
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>

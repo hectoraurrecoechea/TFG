@@ -48,7 +48,7 @@ if(isset($_GET['id_pedido'])) {
 <head>
     <meta charset="UTF-8">
     <title>Detalles del Pedido</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="estilos.css">
     <style>
         table {
             width: 100%;

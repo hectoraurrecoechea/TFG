@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "UPDATE clientes SET pass='$pass', correo='$correo', nombre='$nombre', apellido1='$apellido1', apellido2='$apellido2', telefono='$telefono' WHERE dni='$dni'";
 
     if ($conn->query($sql) === TRUE) {
-        echo "Datos actualizados correctamente.";
+        echo "<script>alert('Datos actualizados correctamente.');</script>";
         $_SESSION['usuario']['pass'] = $pass;
         $_SESSION['usuario']['correo'] = $correo;
         $_SESSION['usuario']['nombre'] = $nombre;
@@ -46,6 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -58,9 +59,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
 <header>
-     <div class="container">
-         <p class="logo">Panaderia Tina</p>
-         <nav>
+    <div class="container">
+        <p class="logo">Panaderia Tina</p>
+        <nav>
             <li><a href="index_usuario.php">INICIO</a></li>
             <li><a href="productos.php">PRODUCTOS</a></li>
             <li><a href="fotos.php">FOTOGRAFÍAS</a></li>
@@ -70,33 +71,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <li><a href="buscar.php"><img src="IMAGENES/lupa.png" alt="buscar" width="30" height="30"></a></li>
             <li><a href="carrito.php"><img src="IMAGENES/carrito-de-compras.png" alt="carrito de compras" width="30" height="30"></a></li>
             <li><a href="cerrarSesion_usuario.php"><img src="IMAGENES/cerrar-sesion.png" alt="cerrarSesion" width="30" height="30"></a></li>
-         </nav>
-     </div>
- </header><br><br>
- <div class="container2">
+        </nav>
+    </div>
+</header>
+<br><br>
+<div class="container2">
     <h2 class="text-center">Configuración de usuario</h2>
     <div class="panel panel-info">
         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-            <div class="form-group"> 
-                <label>&nbsp;&nbsp;DNI:&nbsp;</label><input type="text" size="7" name="dni" value="<?php echo $_SESSION['usuario']['dni'] ?>" readonly>
+            <div class="form-group">
+                <label>&nbsp;&nbsp;DNI:&nbsp;</label>
+                <input type="text" size="7" name="dni" value="<?php echo $_SESSION['usuario']['dni'] ?>" readonly>
             </div>
             <div class="form-group">
-                <label>&nbsp;&nbsp;PASS&nbsp;</label><input type="password" size="30" name="pass" value="<?php echo $_SESSION['usuario']['pass']; ?>">
+                <label>&nbsp;&nbsp;PASS&nbsp;</label>
+                <input type="password" size="30" name="pass" value="<?php echo $_SESSION['usuario']['pass']; ?>" required>
             </div>
             <div class="form-group">
-                <label>&nbsp;&nbsp;CORREO&nbsp;</label><input type="text" name="correo" size="20" value="<?php echo $_SESSION['usuario']['correo']; ?>">
+                <label>&nbsp;&nbsp;CORREO&nbsp;</label>
+                <input type="text" name="correo" size="20" value="<?php echo $_SESSION['usuario']['correo']; ?>" required>
             </div>
             <div class="form-group">
-                <label>&nbsp;&nbsp;NOMBRE&nbsp;</label><input type="text" name="nombre" size="20" value="<?php echo $_SESSION['usuario']['nombre']; ?>">
+                <label>&nbsp;&nbsp;NOMBRE&nbsp;</label>
+                <input type="text" name="nombre" size="20" value="<?php echo $_SESSION['usuario']['nombre']; ?>" required>
             </div>
             <div class="form-group">
-                <label>&nbsp;&nbsp;APELLIDO1&nbsp;</label><input type="text" name="apellido1" size="20" value="<?php echo $_SESSION['usuario']['apellido1']; ?>">
+                <label>&nbsp;&nbsp;APELLIDO1&nbsp;</label>
+                <input type="text" name="apellido1" size="20" value="<?php echo $_SESSION['usuario']['apellido1']; ?>" required>
             </div>
             <div class="form-group">
-                <label>&nbsp;&nbsp;APELLIDO2&nbsp;</label><input type="text" name="apellido2" size="20" value="<?php echo $_SESSION['usuario']['apellido2']; ?>">
+                <label>&nbsp;&nbsp;APELLIDO2&nbsp;</label>
+                <input type="text" name="apellido2" size="20" value="<?php echo $_SESSION['usuario']['apellido2']; ?>" required>
             </div>
             <div class="form-group">
-                <label>&nbsp;&nbsp;TELEFONO&nbsp;</label><input type="text" name="telefono" size="20" value="<?php echo $_SESSION['usuario']['telefono']; ?>">
+                <label>&nbsp;&nbsp;TELEFONO&nbsp;</label>
+                <input type="text" name="telefono" size="20" value="<?php echo $_SESSION['usuario']['telefono']; ?>" required>
             </div>
             <hr>
             &nbsp;&nbsp;<a href="index_usuario.php" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span>Cancelar</a>
@@ -127,4 +136,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 </footer>
- </html>
+</html>
