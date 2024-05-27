@@ -31,9 +31,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $apellido2 = $_POST["apellido2"];
     $telefono = $_POST["telefono"];
 
-    $sql = "UPDATE clientes SET pass='$pass', correo='$correo', nombre='$nombre', apellido1='$apellido1', apellido2='$apellido2', telefono='$telefono' WHERE dni='$dni'";
+    $sql = "UPDATE clientes SET pass=?, correo=?, nombre=?, apellido1=?, apellido2=?, telefono=? WHERE dni=?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sssssss", $pass, $correo, $nombre, $apellido1, $apellido2, $telefono, $dni);
 
-    if ($conn->query($sql) === TRUE) {
+    if ($stmt->execute() === TRUE) {
         echo "<script>alert('Datos actualizados correctamente.');</script>";
         $_SESSION['usuario']['pass'] = $pass;
         $_SESSION['usuario']['correo'] = $correo;
@@ -44,7 +46,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         echo "Error al actualizar los datos: " . $conn->error;
     }
+
+    $stmt->close();
 }
+$conn->close();
 ?>
 
 <!DOCTYPE html>

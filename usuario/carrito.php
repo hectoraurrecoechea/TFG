@@ -212,46 +212,47 @@ if (!empty($_SESSION['carrito'])) {
 
     $total_suma = 0;
 
-    foreach ($_SESSION['carrito'] as $id_producto => $producto) {
-        // Si la cantidad no está definida, establecerla como 1 por defecto
-        $cantidad = isset($producto['cantidad']) ? $producto['cantidad'] : 1;
+foreach ($_SESSION['carrito'] as $id_producto => $producto) {
+    // Si la cantidad no está definida, establecerla como 1 por defecto
+    $cantidad = isset($producto['cantidad']) ? $producto['cantidad'] : 1;
 
-        // Calcular el precio total
-        $precio_total = $producto['precio'] * $cantidad;
+    // Calcular el precio total
+    $precio_total = $producto['precio'] * $cantidad;
 
-        // Sumar al total
-        $total_suma += $precio_total;
+    // Sumar al total
+    $total_suma += $precio_total;
 
-        echo "<tr>";
-        echo "<td>" . $producto['nombre'] . "</td>";
-        echo "<td>" . $producto['descripcion'] . "</td>";
-        echo "<td>" . $producto['precio'] . " €</td>";
-        echo "<td><label>".$producto['cantidad']."</label></td>";
-        echo "<td>
-                <form method='post'>
-                    <input type='hidden' name='id_producto' value='" . $id_producto . "'>
-                    <input type='hidden' name='cantidad' value='" . ($cantidad + 1) . "'>
-                    <button type='submit' name='actualizarCantidad' class='botonSuma'>+</button>  
-                </form>
-                <form method='post'>
-                    <input type='hidden' name='id_producto' value='" . $id_producto . "'>
-                    <input type='hidden' name='cantidad' value='" . ($cantidad - 1) . "'>
-                    <button type='submit' name='actualizarCantidad' class='botonSuma'>-</button>  
-                </form>
-              </td>";
-        echo "<td>$precio_total €</td>";
-        echo "<td>
-        <form method='post'>
-            <input type='hidden' name='id_producto' value='" . $id_producto . "'>
-            <button type='submit' name='eliminar' class='boton2'>Borrar</button>  
-        </form>
-      </td>";
-        echo "</tr>";
-    }
-    echo "</table>";
-    echo "<div class='container-central'>";
-    // Mostrar la suma total
-    echo "<p class='total'>Total: $total_suma €</p>";
+    echo "<tr>";
+    echo "<td>" . $producto['nombre'] . "</td>";
+    echo "<td>" . $producto['descripcion'] . "</td>";
+    echo "<td>" . number_format($producto['precio'], 2) . " €</td>";
+    echo "<td><label>".$producto['cantidad']."</label></td>";
+    echo "<td>
+            <form method='post'>
+                <input type='hidden' name='id_producto' value='" . $id_producto . "'>
+                <input type='hidden' name='cantidad' value='" . ($cantidad + 0.1) . "'>
+                <button type='submit' name='actualizarCantidad' class='botonSuma'>+</button>  
+            </form>
+            <form method='post'>
+                <input type='hidden' name='id_producto' value='" . $id_producto . "'>
+                <input type='hidden' name='cantidad' value='" . ($cantidad - 0.1) . "'>
+                <button type='submit' name='actualizarCantidad' class='botonSuma'>-</button>  
+            </form>
+          </td>";
+    echo "<td>" . number_format($precio_total, 2) . " €</td>";
+    echo "<td>
+    <form method='post'>
+        <input type='hidden' name='id_producto' value='" . $id_producto . "'>
+        <button type='submit' name='eliminar' class='boton2'>Borrar</button>  
+    </form>
+  </td>";
+    echo "</tr>";
+}
+echo "</table>";
+echo "<div class='container-central'>";
+// Mostrar la suma total
+echo "<p class='total'>Total: " . number_format($total_suma, 2) . " €</p>";
+
     // Botón para vaciar el carrito con las nuevas cantidades
     echo "<button type='submit' name='vaciarCarrito' class='boton'>Vaciar Carrito</button>";
     echo "<br><br>";

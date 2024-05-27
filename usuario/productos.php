@@ -206,7 +206,7 @@ if ($result_categorias->num_rows > 0) {
             echo '<tr>';
                 echo '<td class="nombre">' . $row_producto['nombre'] . '</td>';
                 echo '<td class="descripcion">' . $row_producto['descripcion'] . '</td>'; 
-                echo '<td class="precio">' . $row_producto['precio'] . '€</td>';
+                echo '<td class="precio">' . $row_producto['precio'] . '€/Kg</td>';
                 echo '<td ">';
                 echo '<form method="post">';
                 echo '<button type="submit" name="boton" value="' . $row_producto['id_producto'] . '" class="boton">AÑADIR CARRITO</button>'; // Estilos para el botón "Añadir al carrito"

@@ -1,5 +1,12 @@
 <?php
-// Conexión a la base de datos
+// eliminar_usuario.php
+
+session_start();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    echo json_encode(['success' => false, 'message' => 'No hay sesión iniciada.']);
+    exit;
+}
+
 $servername = "localhost";
 $username = "root";
 $password = "12345";
@@ -7,25 +14,23 @@ $dbname = "panaderia";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Verificar conexión
 if ($conn->connect_error) {
-    die("Error de conexión: " . $conn->connect_error);
+    echo json_encode(['success' => false, 'message' => 'Error de conexión.']);
+    exit;
 }
 
-// Recibir el DNI del usuario a eliminar
 $dni = $_POST['dni'];
 
-// Consulta SQL para eliminar el usuario
-$sql = "DELETE FROM clientes WHERE dni='$dni'";
+$sql = "DELETE FROM clientes WHERE dni = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $dni);
 
-if ($conn->query($sql) === TRUE) {
-    // Redirigir a la página de confirmación
-    header("Location: usuario_eliminado.php");
-    exit();
+if ($stmt->execute()) {
+    echo json_encode(['success' => true, 'message' => 'Usuario eliminado correctamente.']);
 } else {
-    echo "Error al eliminar usuario: " . $conn->error;
+    echo json_encode(['success' => false, 'message' => 'Error al eliminar el usuario.']);
 }
 
-// Cerrar conexión
+$stmt->close();
 $conn->close();
 ?>

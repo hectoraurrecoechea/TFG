@@ -1,3 +1,17 @@
+<?php
+session_start();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("location: ../index.php");
+    exit;
+}
+
+
+if ($_SESSION['rol'] == 'administrador') {
+     echo "Bienvenido, Administrador!";
+} else {
+    //echo "Bienvenido, Usuario!";
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -39,11 +53,11 @@
     <div class="carousel">
         <div class="carousel-arrow carousel-arrow-left" id="carousel-arrow-left">&#9664;</div>
         <div class="carousel-container">
-            <div class="carousel-item"><img src="IMAGENES/imagen1.jpeg" alt="Oferta 1"></div>
-            <div class="carousel-item"><img src="IMAGENES/imagen2.jpeg" alt="Oferta 2"></div>
-            <div class="carousel-item"><img src="IMAGENES/imagen3.jpeg" alt="Oferta 3"></div>
-            <div class="carousel-item"><img src="IMAGENES/imagen4.jpeg" alt="Oferta 4"></div>
-            <div class="carousel-item"><img src="IMAGENES/imagen5.jpeg" alt="Oferta 5"></div>
+            <div class="carousel-item"><img src="fotosTienda/FRUTAS/futas1.jpeg" alt="Oferta 1"></div>
+            <div class="carousel-item"><img src="fotosTienda/FRUTAS/futas2.jpeg" alt="Oferta 2"></div>
+            <div class="carousel-item"><img src="fotosTienda/FRUTAS/futas3.jpeg" alt="Oferta 3"></div>
+            <div class="carousel-item"><img src="fotosTienda/FRUTAS/futas4.jpeg" alt="Oferta 4"></div>
+            <div class="carousel-item"><img src="fotosTienda/FRUTAS/futas5.jpeg" alt="Oferta 5"></div>
         </div>
         <div class="carousel-arrow carousel-arrow-right" id="carousel-arrow-right">&#9654;</div>
     </div>

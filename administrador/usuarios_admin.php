@@ -14,6 +14,20 @@
             margin-bottom: 20px; /* Espacio entre la tabla y el borde inferior */
         }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function eliminarUsuario(dni) {
+            if (confirm("¿Estás seguro de que deseas eliminar este usuario?")) {
+                $.post("eliminarUsuarios_admin.php", { dni: dni }, function(response) {
+                    let res = JSON.parse(response);
+                    alert(res.message);
+                    if (res.success) {
+                        location.reload();
+                    }
+                });
+            }
+        }
+    </script>
 </head>
 <body>
     <div class="header">
@@ -95,10 +109,7 @@
                       </form>
                     </td>
                     <td>
-                      <form method="post" action="eliminarUsuarios_admin.php">
-                        <input type='hidden' name='dni' value='<?php echo $row["dni"]?>'>
-                        <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Eliminar</button>
-                      </form>
+                        <button type="button" class="btn btn-danger" onclick="eliminarUsuario('<?php echo $row["dni"]?>')"><span class="glyphicon glyphicon-remove"></span> Eliminar</button>
                     </td>
                     <?php
                     echo "<td>" . $row["dni"] . "</td>";
